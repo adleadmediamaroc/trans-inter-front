@@ -1,0 +1,107 @@
+<div class="dashboard-banking">
+
+
+
+    <div class="p-col-12">
+        <div class="titre" style="height: 50px;"> </div>
+        <div class="card">
+            <button routerLink="ajouterCollaborateur" pButton pRipple type="button" label="Ajouter" icon="pi pi-plus" class="p-button-raised p-mr-2 p-mb-2"></button>
+
+            <button pButton pRipple type="button" label="upload" icon="pi pi-upload" class="p-button-raised p-button-help" style="float: right;"></button>
+
+            <p-table #dt [value]="customers1" [(selection)]="selectedCustomers1" dataKey="id"
+                     styleClass="p-datatable-customers" [rowHover]="true" [rows]="10" [paginator]="true"
+                     [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
+                <ng-template pTemplate="caption">
+
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                        Collaborateurs
+                        <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                           placeholder="Global Search"/>
+                </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr >
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="name">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                Prenom
+                            </div>
+                        </th>
+                        <th pSortableColumn="country.name">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                Nom
+                                </div>
+                        </th>
+                        <th pSortableColumn="representative.name">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                Email
+                                  <ng-template pTemplate="header">
+                                        <div class="p-px-3 p-pt-3 p-pb-0">
+                                            <span class="p-text-bold">Agent Picker</span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                        <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                                            <ng-template let-option pTemplate="item">
+                                                <div class="p-multiselect-representative-option">
+                                                    <img [alt]="option.label" src="assets/demo/images/avatar/{{option.image}}" width="32" style="vertical-align: middle" />
+                                                    <span class="p-ml-1">{{option.name}}</span>
+                                                </div>
+                                            </ng-template>
+                                        </p-multiSelect>
+                                    </ng-template>
+                            </div>
+                        </th>
+                        <th pSortableColumn="date">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                Derniere connexion
+                                 </div>
+                        </th>
+                        <th pSortableColumn="balance">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                Actif
+                                </div>
+                        </th>
+                        <th pSortableColumn="status">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                Options
+
+                            </div>
+                        </th>
+
+                        <th style="width: 8rem"></th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <ng-container *ngIf="collaborateurs && collaborateurs.length > 0; else aucunCollaborateur">
+                    <tr *ngFor="let collaborateur of collaborateurs">
+                        <td>{{ collaborateur.firstName }}</td>
+                        <td>{{ collaborateur.lastName }}</td>
+                        <td>{{collaborateur.phoneNumber}}</td>
+                        <td>{{collaborateur.email}}</td>
+
+                    </tr>
+                    </ng-container>
+                    <ng-template #aucunCollaborateur>
+                        <tr>
+                            <td colspan="3">aucun collaborateur</td>
+                        </tr>
+                    </ng-template>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+
+
+
+
+
+</div>
