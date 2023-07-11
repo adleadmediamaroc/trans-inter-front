@@ -87,26 +87,26 @@ import {TreeTableModule} from 'primeng/treetable';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
 
 import {AppCodeModule} from './app.code.component';
-import {AppComponent} from './app.component';
+import {AppComponent} from './component/app.component';
 import {AppMainComponent} from './app.main.component';
 import {AppConfigComponent} from './app.config.component';
-import {AppNotfoundComponent} from './pages/app.notfound.component';
-import {AppErrorComponent} from './pages/app.error.component';
-import {AppAccessdeniedComponent} from './pages/app.accessdenied.component';
-import {AppLoginComponent} from './pages/app.login.component';
+import {AppNotfoundComponent} from './pages/notfound/app.notfound.component';
+import {AppErrorComponent} from './pages/error/app.error.component';
+import {AppAccessdeniedComponent} from './pages/accessdenied/app.accessdenied.component';
+import {AppLoginComponent} from './pages/login/app.login.component';
 import {AppMenuComponent} from './app.menu.component';
 import {AppMenuitemComponent} from './app.menuitem.component';
 import {AppTopBarComponent} from './app.topbar.component';
 import {AppFooterComponent} from './app.footer.component';
 import {AppProfileComponent} from './app.profile.component';
-import {AppInvoiceComponent} from './pages/app.invoice.component';
-import {AppCrudComponent} from './pages/app.crud.component';
-import {AppCalendarComponent} from './pages/app.calendar.component';
-import {AppTimelineDemoComponent} from './pages/app.timelinedemo.component';
-import {AppHelpComponent} from './pages/app.help.component';
-import {AppWizardComponent} from './pages/app.wizard.component';
+import {AppInvoiceComponent} from './pages/invoice/app.invoice.component';
+import {AppCrudComponent} from './pages/crud/app.crud.component';
+import {AppCalendarComponent} from './pages/calendar/app.calendar.component';
+import {AppTimelineDemoComponent} from './pages/timelinedemo/app.timelinedemo.component';
+import {AppHelpComponent} from './pages/help/app.help.component';
+import {AppWizardComponent} from './pages/wizard/app.wizard.component';
 import {DashboardDemoComponent} from './demo/view/dashboarddemo.component';
-import {DashboardBankingComponent} from './demo/view/dashboardbanking.component';
+import {CollaborateursComponent} from './demo/view/collaborateurs.component';
 import {FormLayoutDemoComponent} from './demo/view/formlayoutdemo.component';
 import {FloatLabelDemoComponent} from './demo/view/floatlabeldemo.component';
 import {InvalidStateDemoComponent} from './demo/view/invalidstatedemo.component';
@@ -125,15 +125,15 @@ import {EmptyDemoComponent} from './demo/view/emptydemo.component';
 import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
 import {FileDemoComponent} from './demo/view/filedemo.component';
 import {DocumentationComponent} from './demo/view/documentation.component';
-import {DisplayComponent} from './utilities/display.component';
-import {ElevationComponent} from './utilities/elevation.component';
-import {FlexboxComponent} from './utilities/flexbox.component';
-import {GridComponent} from './utilities/grid.component';
-import {IconsComponent} from './utilities/icons.component';
-import {SpacingComponent} from './utilities/spacing.component';
-import {TypographyComponent} from './utilities/typography.component';
-import {TextComponent} from './utilities/text.component';
-import {WidgetsComponent} from './utilities/widgets.component';
+import {DisplayComponent} from './utilities/display/display.component';
+import {ElevationComponent} from './utilities/elevation/elevation.component';
+import {FlexboxComponent} from './utilities/flexbox/flexbox.component';
+import {GridComponent} from './utilities/grid/grid.component';
+import {IconsComponent} from './utilities/icons/icons.component';
+import {SpacingComponent} from './utilities/spacing/spacing.component';
+import {TypographyComponent} from './utilities/typography/typography.component';
+import {TextComponent} from './utilities/text/text.component';
+import {WidgetsComponent} from './utilities/widgets/widgets.component';
 
 import {CountryService} from './demo/service/countryservice';
 import {EventService} from './demo/service/eventservice';
@@ -143,6 +143,8 @@ import {CustomerService} from './demo/service/customerservice';
 import {PhotoService} from './demo/service/photoservice';
 import {ProductService} from './demo/service/productservice';
 import {IconService} from './demo/service/iconservice';
+import { AjouterRoleComponent } from './demo/view/ajouter-role/ajouter-role.component';
+import { AjouterCollaborateurComponent } from './demo/view/ajouter-collaborateur/ajouter-collaborateur.component';
 
 @NgModule({
     imports: [
@@ -242,7 +244,7 @@ import {IconService} from './demo/service/iconservice';
         AppProfileComponent,
         AppConfigComponent,
         DashboardDemoComponent,
-        DashboardBankingComponent,
+        CollaborateursComponent,
         FormLayoutDemoComponent,
         FloatLabelDemoComponent,
         InvalidStateDemoComponent,
@@ -280,7 +282,9 @@ import {IconService} from './demo/service/iconservice';
         AppTimelineDemoComponent,
         AppInvoiceComponent,
         AppHelpComponent,
-        AppWizardComponent
+        AppWizardComponent,
+        AjouterRoleComponent,
+        AjouterCollaborateurComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

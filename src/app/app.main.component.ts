@@ -1,7 +1,7 @@
 import {Component, Renderer2} from '@angular/core';
 import { MenuService } from './app.menu.service';
 import { PrimeNGConfig } from 'primeng/api';
-import {AppComponent} from './app.component';
+import {AppComponent} from './component/app.component';
 
 @Component({
     selector: 'app-main',

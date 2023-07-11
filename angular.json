@@ -24,7 +24,9 @@
                             "src/upload.php"
                         ],
                         "styles": [
-                            "src/styles.scss"
+                            "src/styles.scss",
+                            "node_modules/bootstrap/dist/css/bootstrap.min.css"
+
                         ],
                         "scripts": [
                             "node_modules/prismjs/prism.js",

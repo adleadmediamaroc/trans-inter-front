@@ -1,12 +1,8 @@
 <div class="dashboard-banking">
-
-
-
     <div class="p-col-12">
         <div class="titre" style="height: 50px;"> </div>
         <div class="card">
             <button routerLink="ajouterCollaborateur" pButton pRipple type="button" label="Ajouter" icon="pi pi-plus" class="p-button-raised p-mr-2 p-mb-2"></button>
-
             <button pButton pRipple type="button" label="upload" icon="pi pi-upload" class="p-button-raised p-button-help" style="float: right;"></button>
 
             <p-table #dt [value]="customers1" [(selection)]="selectedCustomers1" dataKey="id"
@@ -38,25 +34,10 @@
                                 Nom
                                 </div>
                         </th>
-                        <th pSortableColumn="representative.name">
-                            <div class="p-d-flex p-jc-between p-ai-center">
+                        <th pSortableColumn="representative.name" style="width:250px;">
+                            <div class="p-col p-d-flex p-jc-between p-ai-center">
                                 Email
-                                  <ng-template pTemplate="header">
-                                        <div class="p-px-3 p-pt-3 p-pb-0">
-                                            <span class="p-text-bold">Agent Picker</span>
-                                        </div>
-                                    </ng-template>
-                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                        <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
-                                            <ng-template let-option pTemplate="item">
-                                                <div class="p-multiselect-representative-option">
-                                                    <img [alt]="option.label" src="assets/demo/images/avatar/{{option.image}}" width="32" style="vertical-align: middle" />
-                                                    <span class="p-ml-1">{{option.name}}</span>
-                                                </div>
-                                            </ng-template>
-                                        </p-multiSelect>
-                                    </ng-template>
-                            </div>
+                                </div>
                         </th>
                         <th pSortableColumn="date">
                             <div class="p-d-flex p-jc-between p-ai-center">
@@ -82,10 +63,26 @@
                 <ng-template pTemplate="emptymessage">
                     <ng-container *ngIf="collaborateurs && collaborateurs.length > 0; else aucunCollaborateur">
                     <tr *ngFor="let collaborateur of collaborateurs">
+                        <td></td>
                         <td>{{ collaborateur.firstName }}</td>
                         <td>{{ collaborateur.lastName }}</td>
-                        <td>{{collaborateur.phoneNumber}}</td>
                         <td>{{collaborateur.email}}</td>
+                        <td>{{collaborateur.lastLogin}}</td>
+                        <td>
+                            <ng-container *ngIf="collaborateur.active; else inactiveIcon">
+                                <div class="">
+                                <i class="active-icon "><button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded p-button-text p-mr-2 p-mb-2 p-button-success"></button>
+                                </i>
+                                </div>
+                            </ng-container>
+                            <ng-template #inactiveIcon>
+                                <i class="inactive-icon"><button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text p-mr-2 p-mb-2"></button></i>
+                            </ng-template>
+                        </td>
+                        <td>
+                            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-secondary p-button-text p-mr-2 p-mb-2" (click)="openModal()"></button>
+                            <button  pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text p-mr-2 p-mb-2" (click)="DeleteColl(collaborateur.staffId)"></button>
+                        </td>
 
                     </tr>
                     </ng-container>
@@ -98,10 +95,24 @@
             </p-table>
         </div>
     </div>
-
-
-
-
-
-
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+

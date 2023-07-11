@@ -3,10 +3,10 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { AppTopBarComponent } from './app.topbar.component';
-import { AppProfileComponent } from './app.profile.component';
-import { AppFooterComponent } from './app.footer.component';
-import { AppMenuComponent } from './app.menu.component';
+import { AppTopBarComponent } from '../app.topbar.component';
+import { AppProfileComponent } from '../app.profile.component';
+import { AppFooterComponent } from '../app.footer.component';
+import { AppMenuComponent } from '../app.menu.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
