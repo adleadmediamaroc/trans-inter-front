@@ -4,9 +4,12 @@
     <div class="p-col-12">
         <div class="titre" style="height: 50px;"> </div>
         <div class="card">
-            <button routerLink="ajouterRole" pButton pRipple type="button" label="Ajouter" icon="pi pi-plus" class="p-button-raised p-mr-2 p-mb-2"></button>
-            <button pButton pRipple type="button" label="upload" icon="pi pi-upload" class="p-button-raised p-button-help" style="float: right;"></button>
-
+             <div class="d-flex justify-content-between mb-2">
+                <button routerLink="ajouterRole" pButton pRipple type="button" label="Ajouter" icon="pi pi-plus"
+                        class="p-button-raised p-mr-2 p-mb-2"></button>
+                <button pButton pRipple type="button" label="upload" icon="pi pi-upload"
+                        class="p-button-raised p-button-help"></button>
+            </div>
             <p-table #dt [value]="customers1" [(selection)]="selectedCustomers1" dataKey="id"
                      styleClass="p-datatable-customers" [rowHover]="true" [rows]="10" [paginator]="true"
                      [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
@@ -34,7 +37,6 @@
                             <div class="p-d-flex p-jc-end p-ai-center p-flex-row-reverse">
                                 Option
 
-
                             </div>
                         </th>
                     </tr>
@@ -42,9 +44,22 @@
                 </ng-template>
 
                 <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="8">No customers found.</td>
-                    </tr>
+                    <ng-container *ngIf="roles && roles.length > 0; else aucunRole">
+                        <tr *ngFor="let role of roles">
+                            <td></td>
+                            <td>{{ role.roleName }}</td>
+                            <td>
+                                <button  pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text p-mr-2 p-mb-2" (click)="DeleteRole(role.roleid)" ></button>
+                            </td>
+
+                        </tr>
+
+                    </ng-container>
+                    <ng-template #aucunRole>
+                        <tr>
+                            <td colspan="3">aucun collaborateur</td>
+                        </tr>
+                    </ng-template>
                 </ng-template>
             </p-table>
         </div>

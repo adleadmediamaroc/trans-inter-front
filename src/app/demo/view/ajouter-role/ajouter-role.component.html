@@ -1,69 +1,70 @@
-<div>
-    <div>
-        <div>
-            <ul>
-                <li>
-                    <a href="#profil">Profil</a>
-                </li>
-                <li>
-                    <a href="#permission">Permissions des modules</a>
-                </li>
-            </ul>
-        </div>
-        <div>
-            <form>
-                <div>
-                    <input type="checkbox" id="checkOption2" name="option2" value="Autho" />
-                    <label for="checkOption2">Autoriser l'authentification en deux étapes</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkOption1" name="option1" value="per" />
-                    <label for="checkOption1">Ce n'est pas un membre de personnel</label>
-                </div>
-                <div>
-                    <label>Image profil</label>
-                    <div>
-                        <input type="file" id="upload-image" name="upload-image" />
+<div class="d-flex justify-content-center" >
+    <div class="col-md-10 p-3">
+        <div class="card shadow">
+            <div   class="tab-pane fade show active" >
+                <form [formGroup] ="roleajoutFormGroup" (ngSubmit) ="addRole()">
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <label class="form-label required-field" for="Role">Role </label>
+                        <input type="text" id="Role" formControlName="roleName" class="form-control" required="required" />
                     </div>
-                </div>
-                <span class="required-field" style="color: red">*</span>
-                <label>Prénom</label>
-                <div>
-                    <input type="text" id="prenom" name="prenom" required />
-                </div>
-                <span class="required-field" style="color: red">*</span>
-                <label>Nom</label>
-                <div>
-                    <input type="text" id="nom" name="nom" required />
-                </div>
-                <span class="required-field" style="color: red">*</span>
-                <label>Email</label>
-                <div>
-                    <input type="text" id="email" name="email" required />
-                </div>
-                <label>Téléphone</label>
-                <div>
-                    <input type="text" id="name1" name="telephone" />
-                </div>
-                <label>Signature Email</label>
-                <div>
-                    <textarea rows="3" cols="30" id="signature-email" name="signature-email"></textarea>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkOption4" name="option4" value="Admin" />
-                    <label for="checkOption4">Définir comme administrateur</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkOption3" name="option3" value="Email" />
-                    <label for="checkOption3">Envoyer e-mail de bienvenue</label>
-                </div>
-                <div>
-                    <input type="password" id="password" name="password" required disabled />
-                </div>
-                <div>
-                    <button type="submit">Enregistrer</button>
-                </div>
-            </form>
+                    <!-- Password input -->
+
+
+                    <!-- 2 column grid layout -->
+                    <div class="row mb-4">
+                        <table class="table">
+                            <thead class="table-header">
+                            <tr>
+                                <th>Permission</th>
+                                <th>Affichage</th>
+                                <th>Créer</th>
+                                <th>Modifier</th>
+                                <th>Supprimer</th>
+                            </tr>
+                            </thead>
+                            <tr *ngFor="let permission of permissions,let i">
+                                <td class="line-right">{{ permission.name }}</td>
+                                <td class="text-center"><input type="checkbox" formControlName="{{ i }}.canView" class="form-check-input"></td>
+                                <td class="text-center"><input type="checkbox" formControlName="{{ i }}.canCreate" class="form-check-input"></td>
+                                <td class="text-center"><input type="checkbox" formControlName="{{ i }}.canEdit" class="form-check-input"></td>
+                                <td class="text-center"><input type="checkbox" formControlName="{{ i }}.canDelete" class="form-check-input"></td>
+                            </tr>
+                            <!-- <tbody>
+                             <tr>
+                                 <td class="line-right" >Paramètres</td>
+                                 <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                 <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                 <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                 <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                             </tr>
+                             <tr>
+                                 <td>Collaborateurs</td>
+                                 <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                 <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                 <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                 <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                             </tr>
+                             <tr>
+                                 <td >Rôle collaborateurs</td>
+                                 <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                 <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                 <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                 <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                             </tr>-->
+
+                        </table>
+
+
+
+                    </div>
+
+                    <!-- Submit button -->
+                    <button [disabled]="!roleajoutFormGroup.valid" type="submit" class="btn btn-primary btn-block mb-4">Enregistrer</button>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>

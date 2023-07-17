@@ -17,7 +17,11 @@ export class StaffService {
         return this.http.get<Collaborateurs[]>(this.apiUrl);
     }
 
-    deleteCollaborateur(id: any) {
+    deleteCollaborateur(id: number) {
         return this.http.delete<any>(this.apiUrl + 'delete-staff/' + id);
+    }
+
+    addCollaborateur(collaborateur: Collaborateurs): Observable<any> {
+        return this.http.post<any>(this.apiUrl + 'add-staff', collaborateur);
     }
 }

@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -134,6 +134,7 @@ import {SpacingComponent} from './utilities/spacing/spacing.component';
 import {TypographyComponent} from './utilities/typography/typography.component';
 import {TextComponent} from './utilities/text/text.component';
 import {WidgetsComponent} from './utilities/widgets/widgets.component';
+import {ModalModule} from 'ngx-bootstrap/modal';
 
 import {CountryService} from './demo/service/countryservice';
 import {EventService} from './demo/service/eventservice';
@@ -232,7 +233,8 @@ import { AjouterCollaborateurComponent } from './demo/view/ajouter-collaborateur
         TreeModule,
         TreeTableModule,
         VirtualScrollerModule,
-        AppCodeModule
+        AppCodeModule,
+        ReactiveFormsModule,
     ],
     declarations: [
         AppComponent,

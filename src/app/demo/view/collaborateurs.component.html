@@ -2,8 +2,13 @@
     <div class="p-col-12">
         <div class="titre" style="height: 50px;"> </div>
         <div class="card">
-            <button routerLink="ajouterCollaborateur" pButton pRipple type="button" label="Ajouter" icon="pi pi-plus" class="p-button-raised p-mr-2 p-mb-2"></button>
-            <button pButton pRipple type="button" label="upload" icon="pi pi-upload" class="p-button-raised p-button-help" style="float: right;"></button>
+            <div class="d-flex justify-content-between mb-2">
+                <button routerLink="ajouterCollaborateur" pButton pRipple type="button" label="Ajouter" icon="pi pi-plus"
+                        class="p-button-raised p-mr-2 p-mb-2"></button>
+                <button pButton pRipple type="button" label="upload" icon="pi pi-upload"
+                        class="p-button-raised p-button-help"></button>
+            </div>
+
 
             <p-table #dt [value]="customers1" [(selection)]="selectedCustomers1" dataKey="id"
                      styleClass="p-datatable-customers" [rowHover]="true" [rows]="10" [paginator]="true"
@@ -80,11 +85,50 @@
                             </ng-template>
                         </td>
                         <td>
-                            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-secondary p-button-text p-mr-2 p-mb-2" (click)="openModal()"></button>
-                            <button  pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text p-mr-2 p-mb-2" (click)="DeleteColl(collaborateur.staffId)"></button>
+                            <button  pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-text p-mr-2 p-mb-2" (click)="openModal()"></button>
+                             <button  pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text p-mr-2 p-mb-2" (click)="DeleteColl(collaborateur.staffId)"></button>
+
                         </td>
 
                     </tr>
+                        <div class="modal fade" id="updateEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="StudentEditModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="updateStudentModalLabel"></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form #editForm="ngForm">
+                                            <div class="form-group">
+                                                <label for="nom">Nom</label>
+                                                <input type="text"  name="nom" class="form-control" id="nom"  placeholder="nom">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="prenom">Prenom</label>
+                                                <input type="text"  name="prenom" class="form-control" id="prenom" placeholder="prenom">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="gmail">GMAIL </label>
+                                                <input type="text"  name="gmail" class="form-control" id="gmail"  placeholder="gmail">
+                                            </div>
+
+
+
+
+                                            <div class="modal-footer">
+                                                <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                                                <button  data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </ng-container>
                     <ng-template #aucunCollaborateur>
                         <tr>
@@ -95,24 +139,133 @@
             </p-table>
         </div>
     </div>
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+
+
+
+
+</div>
+<div class="modal-overlay" [class.active]="modalOpen">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h4 class="modal-title">modifier  un collaborateur</h4>
+            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text p-mr-2 p-mb-2" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-check d-flex  mb-4">
+                <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    value=""
+                    id="registerCheck"
+                    checked
+                    aria-describedby="registerCheckHelpText"
+                />
+                <label class="form-check-label" for="registerCheck">
+                    Autoriser l'authentification à deux etapes
+                </label>
             </div>
+            <div class="form-check d-flex  mb-4">
+                <input class="form-check-input me-2"  type="checkbox"  value="" id="perso" checked aria-describedby="registerCheckHelpText"/>
+                <label class="form-check-label" >
+                    Ce n'est pas un membre de personnel
+                </label>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label required-field" for="firstname">Prenom </label>
+                <input type="text" id="firstname" class="form-control"  required="required" name="firstName" >
+            </div>
+            <div class="form-outline mb-2">
+                <label class="form-label required-field" for="name">nom </label>
+                <input type="text" id="name" class="form-control"  required="required" name="firstName">
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label required-field" for="registerEmail">Email </label>
+                <input type="email" id="registerEmail" class="form-control" name="email" required />
+
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label " for="tel">Telephone</label>
+                <input type="number" id="tel" class="form-control"  name="phoneNumber" />
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label " for="registerRepeatPassword">Signature Email </label>
+                <input type="text" id="registerRepeatPassword" class="form-control" name="emailSignature" />
+
+            </div>
+
+            <!-- Checkbox -->
+            <div class="form-check d-flex  mb-4">
+                <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    value=""
+                    id="admin"
+                    checked
+                    aria-describedby="registerCheckHelpText"
+                />
+                <label class="form-check-label" >
+                    Definir comme administrateur
+                </label>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" >Ajouter</button>
+
         </div>
     </div>
 </div>
+<style>
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: -50px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
 
+    .modal-container {
+        position: relative;
+        background-color: #fff;
+        max-width: 1000px;
+        margin: 100px auto;
+        padding: 20px;
+        border-radius: 5px;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-title {
+        margin: 0;
+    }
+
+    .modal-body {
+        padding: 20px 0;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding-top: 10px;
+        border-top: 1px solid #ccc;
+        margin-top: 20px;
+    }
+
+    .open-modal-btn {
+        margin-bottom: 10px;
+    }
+
+    .modal-overlay.active {
+        display: block;
+    }
+</style>

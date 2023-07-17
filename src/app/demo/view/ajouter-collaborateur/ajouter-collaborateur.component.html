@@ -8,14 +8,13 @@
     <div class="col-md-10 p-3">
         <div class="card shadow">
     <div  *ngIf="permission" class="tab-pane fade show active" >
-        <form>
+        <form >
 
             <!-- Email input -->
             <div class="form-outline mb-4">
                 <select class="form-select form-select-lg"  id="loginName">
                     <option value="" disabled selected>Select an option</option>
-                    <option value="email">Email</option>
-                    <option value="username">Username</option>
+
                 </select>
 
             </div>
@@ -45,8 +44,11 @@
             <button type="submit" class="btn btn-primary btn-block mb-4">enregistrer</button>
         </form>
     </div>
+
+
+
     <div *ngIf="profile" class="tab-pane fade  show active" >
-        <form>
+        <form  (ngSubmit)="addCollaborateur()" #form="ngForm">
 
             <div class="form-check d-flex  mb-4">
                 <input
@@ -62,57 +64,50 @@
                 </label>
             </div>
             <div class="form-check d-flex  mb-4">
-                <input
-                    class="form-check-input me-2"
-                    type="checkbox"
-                    value=""
-                    id="perso"
-                    checked
-                    aria-describedby="registerCheckHelpText"
-                />
+                <input class="form-check-input me-2"  type="checkbox"  value="" id="perso" checked aria-describedby="registerCheckHelpText"/>
                 <label class="form-check-label" for="registerCheck">
                    Ce n'est pas un membre de personnel
                 </label>
             </div>
-            <div class="form-outline mb-4">
-                <label class="form-label" for="img">Image Profile</label>
-                <input type="file"  id="img" (change)="onFileSelected($event)" >
+         <!--   <div class="form-outline mb-4">
+                <label class="form-label" for="profileImage">Image Profile</label>
+                <input type="file"  id="profileImage" (change)="onFileSelected($event)" [(ngModel)]="collaborateur.profile_image" name="profileImage" >
 
-            </div>
+            </div>-->
 
 
             <!-- Name input -->
             <div class="form-outline mb-4">
-                <label class="form-label required-field" for="Name">Prenom </label>
-                <input type="text" id="Name" class="form-control" required="required" />
+                <label class="form-label required-field" for="name">Prenom </label>
+                <input type="text" id="name" class="form-control" [(ngModel)]="collaborateur.firstName" required="required" name="firstName">
 
             </div>
 
             <!-- Username input -->
             <div class="form-outline mb-4">
                 <label class="form-label required-field" for="registerUsername">Nom </label>
-                <input type="text" id="registerUsername" class="form-control" required />
+                <input type="text" id="registerUsername" class="form-control" [(ngModel)]="collaborateur.lastName" name="lastName" required />
 
             </div>
 
             <!-- Email input -->
             <div class="form-outline mb-4">
                 <label class="form-label required-field" for="registerEmail">Email </label>
-                <input type="email" id="registerEmail" class="form-control"  required />
+                <input type="email" id="registerEmail" class="form-control" [(ngModel)]="collaborateur.email" name="email" required />
 
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-4">
                 <label class="form-label " for="tel">Telephone</label>
-                <input type="number" id="tel" class="form-control" />
+                <input type="number" id="tel" class="form-control" [(ngModel)]="collaborateur.phoneNumber" name="phoneNumber" />
 
             </div>
 
             <!-- Repeat Password input -->
             <div class="form-outline mb-4">
                 <label class="form-label " for="registerRepeatPassword">Signature Email </label>
-                <input type="text" id="registerRepeatPassword" class="form-control"  />
+                <input type="text" id="registerRepeatPassword" class="form-control" [(ngModel)]="collaborateur.emailSignature" name="emailSignature" />
 
             </div>
 
@@ -145,12 +140,12 @@
             </div>
             <div class="form-outline mb-4">
                 <label class="form-label required-field" for="Password">Password</label>
-                <input type="text" id="Password" class="form-control"  required/>
+                <input type="password" id="Password" class="form-control"  required [(ngModel)]="collaborateur.password" name="password"/>
 
             </div>
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mb-3">Enregistrer</button>
+            <button type="submit" class="btn btn-primary btn-block mb-3" [disabled]="!form.valid">Enregistrer</button>
         </form>
     </div>
     </div>
