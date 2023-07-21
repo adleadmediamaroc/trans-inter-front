@@ -4,100 +4,76 @@ import { Product } from '../../api/product';
 import { ProductService } from '../../service/product.service';
 import { Subscription } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { Collaborateurs } from '../../api/main';
+import { StaffService } from '../../service/StaffService';
+import {Router} from "@angular/router";
+import { Location } from '@angular/common';
 
 @Component({
     templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit {
 
-    items!: MenuItem[];
+    public visible = false;
+    editCollaborateurs?: Collaborateurs;
 
-    products!: Product[];
+    selectedDropdownItem: any;
+    afficher = false;
 
-    chartData: any;
 
-    chartOptions: any;
-
-    subscription!: Subscription;
-
-    constructor(private productService: ProductService, public layoutService: LayoutService) {
-        this.subscription = this.layoutService.configUpdate$.subscribe(() => {
-            this.initChart();
-        });
-    }
+    constructor(private staffService: StaffService , private location: Location, private router: Router) { }
+    collaborateurs?: Collaborateurs[];
+    isModalOpen = false;
+    modalOpen = false;
 
     ngOnInit() {
-        this.initChart();
-        this.productService.getProductsSmall().then(data => this.products = data);
-
-        this.items = [
-            { label: 'Add New', icon: 'pi pi-fw pi-plus' },
-            { label: 'Remove', icon: 'pi pi-fw pi-minus' }
-        ];
+        this.staffService.getCollaborateurs().subscribe(data => {
+            this.collaborateurs = data;
+        });
+    }
+    /*refresh(): void {
+        this.router.navigateByUrl('/dashboards/collaborateurs' , { skipLocationChange: true }).then(() => {
+            console.log(decodeURI(this.location.path()));
+            this.router.navigate([decodeURI(this.location.path())]);
+        });
+    }*/
+    openModal() {
+        this.modalOpen = true;
     }
 
-    initChart() {
-        const documentStyle = getComputedStyle(document.documentElement);
-        const textColor = documentStyle.getPropertyValue('--text-color');
-        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+    closeModal() {
+        this.modalOpen = false;
+    }
 
-        this.chartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    label: 'First Dataset',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--bluegray-700'),
-                    borderColor: documentStyle.getPropertyValue('--bluegray-700'),
-                    tension: .4
-                },
-                {
-                    label: 'Second Dataset',
-                    data: [28, 48, 40, 19, 86, 27, 90],
-                    fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--green-600'),
-                    borderColor: documentStyle.getPropertyValue('--green-600'),
-                    tension: .4
-                }
-            ]
-        };
 
-        this.chartOptions = {
-            plugins: {
-                legend: {
-                    labels: {
-                        color: textColor
-                    }
-                }
+    DeleteColl(id: any) {
+        this.staffService.deleteCollaborateur(id).subscribe(
+            () => {
+                console.log('Collaborateur supprimé avec succès');
+                //this.refresh(); // Recharge la page
             },
-            scales: {
-                x: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                },
-                y: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                }
+            error => {
+                console.error('Une erreur s\'est produite lors de la suppression du collaborateur :', error);
+                // Gérez l'erreur en conséquence
             }
-        };
+        );
     }
-
-    ngOnDestroy() {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
+    public onOpenModal(collaborateurs: Collaborateurs, mode: string): void {
+        let container = document.getElementById('main-container');
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.style.display = 'none';
+        button.setAttribute('data-toggle', 'modal');
+        if (mode === 'edit') {
+            this.editCollaborateurs = collaborateurs;
+            button.setAttribute('data-target', '#updateEmployeeModal');
         }
+        //container.appendChild(button);
+        button.click();
+
+
     }
+   /* afficherFormulaire() {
+        this.router.navigate(['/ajouterRole']); // Remplacez '/ajouter' par le chemin de votre route du formulaire
+    }*/
 }

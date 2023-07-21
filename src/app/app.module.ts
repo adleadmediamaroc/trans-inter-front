@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import {HashLocationStrategy, LocationStrategy, NgClass, NgForOf, NgIf} from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
@@ -11,14 +11,31 @@ import { EventService } from './demo/service/event.service';
 import { IconService } from './demo/service/icon.service';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
+import { AjouterCollaborateurComponent } from './ajouter-collaborateur/ajouter-collaborateur.component';
+import {ButtonModule} from "primeng/button";
+import {RippleModule} from "primeng/ripple";
+import {FormsModule} from "@angular/forms";
+import {InputTextModule} from "primeng/inputtext";
+import {AutoCompleteModule} from "primeng/autocomplete";
+import {TableModule} from "primeng/table";
+import {RoleComponent} from "./role/role.component";
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent
+        AppComponent, NotfoundComponent, AjouterCollaborateurComponent,RoleComponent
     ],
     imports: [
         AppRoutingModule,
-        AppLayoutModule
+        AppLayoutModule,
+        NgClass,
+        ButtonModule,
+        RippleModule,
+        FormsModule,
+        NgIf,
+        InputTextModule,
+        AutoCompleteModule,
+        TableModule,
+        NgForOf
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

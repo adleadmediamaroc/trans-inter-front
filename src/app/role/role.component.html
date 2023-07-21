@@ -1,0 +1,48 @@
+  <table class="table-responsive">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <span class="p-input-icon-left mb-2">
+                                <i class="pi pi-search"></i>
+                            <form >
+                                <input type="text" [(ngModel)]="role.name" name="name"  placeholder="Search Keyword" class="w-full"/>
+                                  <button type="submit" class="btn btn-primary">Ajouter un rôle</button>
+                            </form>
+                            </span>
+
+                    </div>
+                <br>
+                    <tr>
+                        <th style="min-width: 12rem">
+                            <div class="flex justify-content-between align-items-center">
+                                Permission
+                            </div>
+                        </th>
+                        <th style="min-width: 12rem">
+                            <div class="flex justify-content-between align-items-center">
+                                Afficher
+                            </div>
+                        </th>
+                        <th style="min-width: 14rem">
+                            <div class="flex justify-content-between align-items-center">
+                                Creer
+                            </div>
+                        </th>
+                        <th style="min-width: 10rem">
+                            <div class="flex justify-content-between align-items-center">
+                                Modifier
+                            </div>
+                        </th>
+                        <th style="min-width: 10rem">
+                            <div class="flex justify-content-between align-items-center">
+                                Supprimer
+                            </div>
+                        </th>
+                    </tr>
+
+                    <tr *ngFor="let permission of permissions">
+                        <td style="min-width: 12rem">{{ permission.name }}</td>
+                        <td *ngFor="let item of [1, 2, 3, 4]">
+                            <input type="checkbox" class="form-check-input" />
+                        </td>
+                    </tr>
+            </table>
+
