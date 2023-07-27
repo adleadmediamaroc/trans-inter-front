@@ -19,6 +19,9 @@ import {InputTextModule} from "primeng/inputtext";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {TableModule} from "primeng/table";
 import {RoleComponent} from "./role/role.component";
+import {DataViewModule} from "primeng/dataview";
+import {DropdownModule} from "primeng/dropdown";
+import {RatingModule} from "primeng/rating";
 
 @NgModule({
     declarations: [
@@ -35,7 +38,10 @@ import {RoleComponent} from "./role/role.component";
         InputTextModule,
         AutoCompleteModule,
         TableModule,
-        NgForOf
+        NgForOf,
+        DataViewModule,
+        DropdownModule,
+        RatingModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

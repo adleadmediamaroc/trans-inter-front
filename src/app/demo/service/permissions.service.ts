@@ -7,7 +7,7 @@ import{Permission} from "../api/main";
     providedIn: 'root'
 })
 export class PermissionService {
-    private apiUrl = 'http://localhost:8080/api/permissions';
+    private apiUrl = 'http://localhost:8080/permissions';
     constructor(private http: HttpClient) { }
 
     getPermissions(): Observable<Permission[]> {

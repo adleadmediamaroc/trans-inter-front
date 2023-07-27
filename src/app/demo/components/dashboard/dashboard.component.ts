@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
 
     selectedDropdownItem: any;
     afficher = false;
+    display: boolean = false;
 
 
     constructor(private staffService: StaffService , private location: Location, private router: Router) { }
@@ -50,6 +51,7 @@ export class DashboardComponent implements OnInit {
         this.staffService.deleteCollaborateur(id).subscribe(
             () => {
                 console.log('Collaborateur supprimé avec succès');
+                window.location.reload();
                 //this.refresh(); // Recharge la page
             },
             error => {

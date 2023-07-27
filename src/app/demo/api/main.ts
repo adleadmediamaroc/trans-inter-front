@@ -34,11 +34,13 @@ export interface Permission{
     shortname: string;
 }
 
-export interface Role
+export class Role
 {
-    roleid: number;
-    roleName: string;
-    rolepermission : RolePermission[];
+    roleid?: number;
+    roleName?: string;
+    rolepermission? : RolePermission[];
+    constructor() {
+    }
 
 
 }

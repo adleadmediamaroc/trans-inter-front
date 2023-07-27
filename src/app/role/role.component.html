@@ -1,14 +1,26 @@
-  <table class="table-responsive">
-                    <div class="flex justify-content-between flex-column sm:flex-row">
-                        <span class="p-input-icon-left mb-2">
-                                <i class="pi pi-search"></i>
-                            <form >
-                                <input type="text" [(ngModel)]="role.name" name="name"  placeholder="Search Keyword" class="w-full"/>
-                                  <button type="submit" class="btn btn-primary">Ajouter un rôle</button>
-                            </form>
-                            </span>
+<!--
 
-                    </div>
+<form (ngSubmit)="createRole()">
+
+<div class="col-12">
+
+    <div class="card">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+
+            <span class="p-input-icon-left mb-2">
+
+         <div class="col-12 mb-2 lg:col-6 lg:mb-0">
+    <input type="text" pInputText placeholder="Default" class="w-full">
+</div>
+
+
+
+
+    </span>
+
+
+<table >
+
                 <br>
                     <tr>
                         <th style="min-width: 12rem">
@@ -40,9 +52,64 @@
 
                     <tr *ngFor="let permission of permissions">
                         <td style="min-width: 12rem">{{ permission.name }}</td>
-                        <td *ngFor="let item of [1, 2, 3, 4]">
-                            <input type="checkbox" class="form-check-input" />
+                        <td *ngFor="let item of [1, 2, 3, 4]" class="text-center">
+                            <div class="flex justify-center items-center">
+                                <input type="checkbox" class="form-check-input" />
+                            </div>
                         </td>
                     </tr>
             </table>
 
+    </div>
+        <div class="ml-2">
+            <button type="button" class="btn btn-primary" (click)="createRole()">Ajouter un rôle</button>
+        </div>
+</div>
+</div>
+</form>
+```
+
+
+-->
+<div>
+    <h2>Create New Role</h2>
+    <form (ngSubmit)="createRoleWithPermissions()">
+        <div>
+            <label for="roleName">Role Name:</label>
+            <input type="text" id="roleName" [(ngModel)]="roleName" name="roleName" required>
+        </div>
+        <div>
+
+            <table>
+                <tr>
+                    <th>Permissions</th>
+                    <th>Can View</th>
+                    <th>Can Create</th>
+                    <th>Can Edit</th>
+                    <th>Can Delete</th>
+                </tr>
+                <tr  *ngFor="let permission of permissions">
+                    <td >{{permission.name}}</td>
+                    <td><input type="checkbox" [(ngModel)]="canView" name="canView"></td>
+                    <td><input type="checkbox" [(ngModel)]="canCreat" name="canCreat"></td>
+                    <td><input type="checkbox" [(ngModel)]="canEdit" name="canEdit "></td>
+                    <td><input type="checkbox" [(ngModel)]="canDelete" name="canDelet"></td>
+
+                    <!-- <td>
+                         <input type="checkbox" name="canView" [(ngModel)]="permission.canCreate">
+                     </td>
+                     <td>
+                         <input type="checkbox"  name="canCreate" [(ngModel)]="permission.canView">
+                     </td>
+                     <td>
+                         <input type="checkbox"  name="canEdit" [(ngModel)]="permission.canEdit">
+                     </td>
+                     <td>
+                         <input type="checkbox" name="canDelete" [(ngModel)]="permission.canDelete">
+                     </td>-->
+                </tr>
+            </table>
+        </div>
+        <button type="submit">Create Role</button>
+    </form>
+</div>

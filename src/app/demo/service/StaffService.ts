@@ -21,7 +21,7 @@ export class StaffService {
         return this.http.delete<any>(this.apiUrl + 'delete-staff/' + id);
     }
 
-    addCollaborateur(collaborateur: Collaborateurs): Observable<any> {
-        return this.http.post<any>(this.apiUrl + 'add-staff', collaborateur);
+    addCollaborateur(collaborateur: Collaborateurs){
+        return this.http.post(this.apiUrl + 'add-staff', collaborateur);
     }
 }

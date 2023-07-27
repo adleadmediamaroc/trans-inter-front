@@ -18,9 +18,9 @@ export class AjouterCollaborateurComponent {
     collaborateurs?: Collaborateurs[];
     collaborateur: Collaborateurs = new Collaborateurs();
     roles? :Role[];
-    selectedRolePermissions?: Role;
-    rolePermission :RolePermission[]=[]
-
+    selectedRole ?: Role;
+    rolePermission :RolePermission[]=[];
+    newrole?:Role;
     constructor(private staffservice: StaffService , private http:HttpClient) {}
     ngOnInit(): void {
         this.http.get<Role[]>('http://localhost:8080/api/roles/').subscribe(
@@ -30,23 +30,46 @@ export class AjouterCollaborateurComponent {
             (error) => {
                 console.log(error);
             }
-        );
-
+            );
     }
 
     onRoleChange() {
-        console.log('Selected Role ID:', this.selectedRolePermissions);
+        this.newrole = {
+            roleid: 1,
+            roleName: "Example Role",
+            rolepermission: [
+                {
+                    permissionid: 1,
+                    roleid: 1,
+                    canView: true,
+                    canCreate: true,
+                    canEdit: true,
+                    canDelete: false,
+                },
+                {
+                    permissionid: 2,
+                    roleid: 1,
+                    canView: true,
+                    canCreate: false,
+                    canEdit: false,
+                    canDelete: true,
+                },
+                // Vous pouvez ajouter d'autres autorisations pour ce rôle ici
+            ],
+        };
+
+        console.log('Selected Role ID:', this.selectedRole?.rolepermission);
         // Effectuez une requête HTTP pour récupérer les rolePermissions pour le rôle sélectionné
-        this.http.get<Role>(`http://localhost:8080/api/roles/`+ this.selectedRolePermissions).subscribe(
+       /* this.http.get<Role>(`http://localhost:8080/api/roles/`+41).subscribe(
             (role) => {
-                this.selectedRolePermissions = role;
+                this.selectedRole=role;
                 this.rolePermission=role.rolepermission;
 
             },
             (error) => {
                 console.log(error);
             }
-        );
+        );*/
     }
 
     profileColl() {

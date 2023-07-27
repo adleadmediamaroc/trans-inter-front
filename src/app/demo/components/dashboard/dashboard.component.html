@@ -5,9 +5,9 @@
             <div class="card">
                 <div class="d-flex justify-content-between mb-2">
                     <button routerLink="ajouterCollaborateur" pButton pRipple type="button" label="Ajouter" icon="pi pi-plus"
-                            class="p-button-raised p-mr-2 p-mb-2"></button>
+                            class="p-button-raised p-mr-2 p-mb-2" style="margin-right:50px"></button>
                     <button pButton pRipple type="button" label="upload" icon="pi pi-upload"
-                            class="p-button-raised p-button-help"></button>
+                            class="p-button-raised p-button-help p-ml-2"></button>
                 </div>
                 <p-table >
                     <ng-template pTemplate="header">
@@ -70,13 +70,149 @@
                                 </ng-template>
                             </td>
                             <td>
-                                <button  pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-text p-mr-2 p-mb-2" (click)="openModal()"></button>
-                                 <button  pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text p-mr-2 p-mb-2" (click)="DeleteColl(collaborateur.staffId)"></button>
+                                <div >
+
+                                    <p-dialog header="Modifier un collaborateur" [(visible)]="display" [modal]="true" showEffect="fade" [style]="{width: '70vw'}" [breakpoints]="{'960px': '75vw'}">
+                                        <div class="modal-container">
+
+                                            <form   #form="ngForm">
+                                                <div class="card p-fluid ">
+                                                    <div class="form-check d-flex  mb-4">
+                                                        <input
+                                                            class="form-check-input me-2"
+                                                            type="checkbox"
+                                                            value=""
+                                                            id="quth"
+                                                            aria-describedby="registerCheckHelpText"
+                                                        />
+                                                        <label class="form-check-label" for="registerCheck">
+                                                            Autoriser l'authentification à deux etapes
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check d-flex  mb-4">
+                                                        <input class="form-check-input me-2"  type="checkbox"  value="" id="perso"  aria-describedby="registerCheckHelpText" [(ngModel)]="collaborateur.is_not_staff" name="notstaff"/>
+                                                        <label class="form-check-label" for="registerCheck">
+                                                            Ce n'est pas un membre de personnel
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="field">
+                                                        <label class="form-label required-field"  htmlFor="name1">Prenom</label>
+                                                        <input pInputText id="name1" type="text" class="form-control" [(ngModel)]="collaborateur.firstName" required="required" name="firstName" />
+                                                    </div>
+                                                    <div class="field">
+                                                        <label class="form-label required-field" htmlFor="lastname">Nom</label>
+                                                        <input pInputText id="lastname" type="text"  class="form-control" [(ngModel)]="collaborateur.lastName" name="lastName" required />
+                                                    </div>
+
+                                                    <div class="field">
+                                                        <label htmlFor="email1" class="form-label required-field">Email</label>
+                                                        <input pInputText id="email1" type="text" class="form-control" [(ngModel)]="collaborateur.email" name="email" required />
+                                                    </div>
+
+
+                                                    <div class="field">
+                                                        <label htmlFor="tel" class="form-label ">Telephone</label>
+                                                        <input pInputText id="tel" type="text" class="form-control" [(ngModel)]="collaborateur.phoneNumber" name="phoneNumber" />
+                                                    </div>
+                                                    <div class="form-outline field">
+                                                        <label htmlFor="signature" class="form-label ">Signature Email</label>
+                                                        <input pInputText id="signature" type="text" class="form-control" [(ngModel)]="collaborateur.emailSignature" name="emailSignature" />
+                                                    </div>
+
+                                                    <div class="form-check d-flex  mb-4">
+                                                        <input
+                                                            class="form-check-input me-2"
+                                                            type="checkbox"
+                                                            value=""
+                                                            id="admin"
+                                                            aria-describedby="registerCheckHelpText"
+                                                            [(ngModel)]="collaborateur.admin"
+                                                            name="admin"
+                                                        />
+                                                        <label class="form-check-label" for="registerCheck">
+                                                            Definir comme administrateur
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check d-flex  mb-4">
+                                                        <input
+                                                            class="form-check-input me-2"
+                                                            type="checkbox"
+                                                            value=""
+                                                            id="registerCheck"
+                                                            checked
+                                                            aria-describedby="registerCheckHelpText"
+                                                        />
+                                                        <label class="form-check-label" for="registerCheck">
+                                                            Envoyer un email de bienvenue
+                                                        </label>
+                                                    </div>
+
+
+                                                    <div class="field">
+                                                        <label htmlFor="Password" class="form-label required-field">Password</label>
+                                                        <input pInputText id="Password" type="password" class="form-control"  required [(ngModel)]="collaborateur.password" name="password"/>
+                                                    </div>
+
+
+
+
+
+                                                </div>
+
+
+
+
+
+
+
+                                                <!--   <div class="form-outline mb-4">
+                                                       <label class="form-label" for="profileImage">Image Profile</label>
+                                                       <input type="file"  id="profileImage" (change)="onFileSelected($event)" [(ngModel)]="collaborateur.profile_image" name="profileImage" >
+
+                                                   </div>-->
+
+
+                                                <!-- Name input -->
+
+
+                                                <!-- Username input -->
+
+                                                <!-- Email input -->
+
+
+                                                <!-- Password input -->
+
+
+                                                <!-- Repeat Password input -->
+
+
+                                                <!-- Checkbox -->
+
+
+
+                                                <!-- Submit button -->
+                                            </form>
+
+                                        </div>
+
+                                        <ng-template pTemplate="footer">
+                                            <button pButton pRipple icon="pi pi-check" (click)="display=false" label="Enregitrer" [disabled]="!form.valid" class="p-button-outlined"></button>
+
+
+                                        </ng-template>
+                                    </p-dialog>
+                                    <div class="grid">
+                                        <div class="col-12">
+                                            <button (click)="display=true" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-text p-mr-2 p-mb-2"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button  pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text p-mr-2 p-mb-2" (click)="DeleteColl(collaborateur.staffId)"></button>
 
                             </td>
 
                         </tr>
-
                         </ng-container>
                         <ng-template #aucunCollaborateur>
                             <tr>
@@ -88,131 +224,7 @@
             </div>
         </div>
     </div>
-    <div class="modal-overlay" [class.active]="modalOpen">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h4 class="modal-title">modifier  un collaborateur</h4>
-                <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text p-mr-2 p-mb-2" (click)="closeModal()"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-check d-flex  mb-4">
-                    <input
-                        class="form-check-input me-2"
-                        type="checkbox"
-                        value=""
-                        id="registerCheck"
-                        checked
-                        aria-describedby="registerCxheckHelpText"
-                    />
-                    <label class="form-check-label" for="registerCheck">
-                        Autoriser l'authentification à deux etapes
-                    </label>
-                </div>
-                <div class="form-check d-flex  mb-4">
-                    <input class="form-check-input me-2"  type="checkbox"  value="" id="perso" checked aria-describedby="registerCheckHelpText"/>
-                    <label class="form-check-label" >
-                        Ce n'est pas un membre de personnel
-                    </label>
-                </div>
-                <div class="form-outline mb-4">
-                    <label class="form-label required-field" for="firstname">Prenom </label>
-                    <input type="text" id="firstname" class="form-control"  required="required" name="firstName" >
-                </div>
-                <div class="form-outline mb-2">
-                    <label class="form-label required-field" for="name">nom </label>
-                    <input type="text" id="name" class="form-control"  required="required" name="firstName">
-                </div>
 
-                <div class="form-outline mb-4">
-                    <label class="form-label required-field" for="registerEmail">Email </label>
-                    <input type="email" id="registerEmail" class="form-control" name="email" required />
-
-                </div>
-
-                <div class="form-outline mb-4">
-                    <label class="form-label " for="tel">Telephone</label>
-                    <input type="number" id="tel" class="form-control"  name="phoneNumber" />
-                </div>
-
-                <div class="form-outline mb-4">
-                    <label class="form-label " for="registerRepeatPassword">Signature Email </label>
-                    <input type="text" id="registerRepeatPassword" class="form-control" name="emailSignature" />
-
-                </div>
-
-                <!-- Checkbox -->
-                <div class="form-check d-flex  mb-4">
-                    <input
-                        class="form-check-input me-2"
-                        type="checkbox"
-                        value=""
-                        id="admin"
-                        checked
-                        aria-describedby="registerCheckHelpText"
-                    />
-                    <label class="form-check-label" >
-                        Definir comme administrateur
-                    </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" >Ajouter</button>
-
-            </div>
-        </div>
-    </div>
-    <style>
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: -50px;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        .modal-container {
-            position: relative;
-            background-color: #fff;
-            max-width: 1000px;
-            margin: 100px auto;
-            padding: 20px;
-            border-radius: 5px;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title {
-            margin: 0;
-        }
-
-        .modal-body {
-            padding: 20px 0;
-        }
-
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            padding-top: 10px;
-            border-top: 1px solid #ccc;
-            margin-top: 20px;
-        }
-
-        .open-modal-btn {
-            margin-bottom: 10px;
-        }
-
-        .modal-overlay.active {
-            display: block;
-        }
-    </style>
 
 </div>
 

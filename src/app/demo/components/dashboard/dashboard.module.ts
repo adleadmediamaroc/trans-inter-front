@@ -11,6 +11,8 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { DashboardsRoutingModule } from './dashboard-routing.module';
 import {RippleModule} from "primeng/ripple";
 import {ChipsModule} from "primeng/chips";
+import {DialogModule} from "primeng/dialog";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
     imports: [
@@ -24,7 +26,9 @@ import {ChipsModule} from "primeng/chips";
         ButtonModule,
         DashboardsRoutingModule,
         RippleModule,
-        ChipsModule
+        ChipsModule,
+        DialogModule,
+        ToastModule
     ],
     declarations: [DashboardComponent]
 })
