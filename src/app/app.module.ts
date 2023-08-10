@@ -22,10 +22,13 @@ import {RoleComponent} from "./role/role.component";
 import {DataViewModule} from "primeng/dataview";
 import {DropdownModule} from "primeng/dropdown";
 import {RatingModule} from "primeng/rating";
+import { DemandeComponent } from './demo/components/tarification/demande/demande.component';
+import { TarifComponent } from './demo/components/tarification/tarif/tarif.component';
+import { OffresComponent } from './demo/components/tarification/offres/offres.component';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, AjouterCollaborateurComponent,RoleComponent
+        AppComponent, NotfoundComponent, AjouterCollaborateurComponent,RoleComponent, DemandeComponent, TarifComponent, OffresComponent
     ],
     imports: [
         AppRoutingModule,
@@ -41,7 +44,8 @@ import {RatingModule} from "primeng/rating";
         NgForOf,
         DataViewModule,
         DropdownModule,
-        RatingModule
+        RatingModule,
+
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

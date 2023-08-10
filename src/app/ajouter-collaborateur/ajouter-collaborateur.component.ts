@@ -18,19 +18,29 @@ export class AjouterCollaborateurComponent {
     collaborateurs?: Collaborateurs[];
     collaborateur: Collaborateurs = new Collaborateurs();
     roles? :Role[];
-    selectedRole ?: Role;
+    selectedRole ?: Role[];
     rolePermission :RolePermission[]=[];
     newrole?:Role;
+    permissions?: Permissions[];
     constructor(private staffservice: StaffService , private http:HttpClient) {}
     ngOnInit(): void {
         this.http.get<Role[]>('http://localhost:8080/api/roles/').subscribe(
             (roles) => {
-                this.roles = roles;
+                this.selectedRole = roles;
             },
             (error) => {
                 console.log(error);
             }
             );
+
+        this.http.get<Permissions[]>('http://localhost:8080/permissions').subscribe(
+            (permission) => {
+                this.permissions = permission;
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
     }
 
     onRoleChange() {
@@ -58,7 +68,7 @@ export class AjouterCollaborateurComponent {
             ],
         };
 
-        console.log('Selected Role ID:', this.selectedRole?.rolepermission);
+        console.log('Selected Role ID:');
         // Effectuez une requête HTTP pour récupérer les rolePermissions pour le rôle sélectionné
        /* this.http.get<Role>(`http://localhost:8080/api/roles/`+41).subscribe(
             (role) => {
