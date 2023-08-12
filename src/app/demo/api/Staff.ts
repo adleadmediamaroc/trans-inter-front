@@ -1,6 +1,6 @@
 export interface Staff {
 
-    staffId?: bigint;
+    staffId?: bigint| null;
     firstName ?: string;
     lastName?: string;
     email?: string;

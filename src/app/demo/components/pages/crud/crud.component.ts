@@ -38,6 +38,7 @@ export class CrudComponent implements OnInit {
     contact: ContactClient={};
     clientDialog: boolean = false;
     deleteClientDialog: boolean = false;
+    StaffDialog: boolean =false;
  
     submitted: boolean = false;
 
@@ -52,7 +53,8 @@ export class CrudComponent implements OnInit {
     Total_Active_Contacts : number =0;
     Total_Inactive_Contacts : number =0;
     FullName:string=" ";
-    boolcommercial: boolean=false;
+    
+    Staff: Staff={};
   
 
     constructor(private clientService: ClientService,private contactService: ContactClientService, private messageService: MessageService, private countryService: CountryService, private currencyService: CurrencyService, private StaffService: StaffService) { }
@@ -69,14 +71,17 @@ export class CrudComponent implements OnInit {
 
 
 
-        //this.productService.getProducts().then(data => this.products = data);
-        this.clientService.getClients().subscribe({next: (data: Client[])=>{this.clients=data;console.log(data);}});
+       
+        this.clientService.getClients().subscribe({next: (data: Client[])=>{this.clients=data;}});
 
-        this.countryService.getAllCountries().subscribe({next:(data:Country[])=> {this.countries = data;console.log(data);}});
+        this.countryService.getAllCountries().subscribe({next:(data:Country[])=> {this.countries = data;}});
 
-        this.currencyService.getAllCurrencies().subscribe({next:(data:Currency[])=> {this.currencies=data;console.log(data);}});
+        this.currencyService.getAllCurrencies().subscribe({next:(data:Currency[])=> {this.currencies=data;}});
         
-        this.StaffService.listStaff().subscribe({next:(data:Staff[])=> {this.listStaff=data;console.log(data);}});
+        this.StaffService.listStaff().subscribe({next:(data:Staff[])=> {this.listStaff=data;}});
+         // Generate a unique bigint based on current timestamp const uniqueId = BigInt(Date.now()); data.push({ staffId: uniqueId, lastName: "None", firstName: "" });
+
+         //this.clientService.clients$.subscribe(updatedClients => {this.clients = updatedClients;});
         
        
   
@@ -84,30 +89,57 @@ export class CrudComponent implements OnInit {
 
     }
 
+  
 
+
+  onCountrySelectionChangeS(selectedCountry: any) {
+    if (selectedCountry && selectedCountry.countryId) {
+      this.client.shippingCountryId = selectedCountry.countryId;
+    }
+  }
+  onCountrySelectionChangeB(selectedCountry: any) {
+    if (selectedCountry && selectedCountry.countryId) {
+      this.client.billingCountryId = selectedCountry.countryId;
+    }
+  }
+  onCountrySelectionChange(selectedCountry: any) {
+    if (selectedCountry && selectedCountry.countryId) {
+      this.client.countryId = selectedCountry.countryId;
+    }
+  }
+
+  onCurrencySelectionChange(selectedCurrency: any) {
+    if (selectedCurrency && selectedCurrency.currencyId) {
+      this.client.defaultCurrencyId = selectedCurrency.currencyId;
+    }
+  }
+  onStaffSelectionChange(selectedStaff: any) {
+    if (selectedStaff && selectedStaff.staffId) {
+      this.Staff.staffId = selectedStaff.staffId;
+    }
+  }
 
      
 
 
     ajouterClient(){
-        this.boolcommercial=false;
-        
-        
         this.client = {};
         this.submitted = false;
         this.clientDialog = true;
     }
 
-
+    commercial(client: Client) {
+      this.Staff={}
+      this.client = { ...client };
+      this.StaffDialog = true;
+    }
+  
 
 
 
     editClient(client: Client) {
         this.client = { ...client };
         this.clientDialog = true;
-
-        this.boolcommercial=true;
-
     }
 
 
@@ -126,121 +158,102 @@ export class CrudComponent implements OnInit {
     }
 
     hideDialog() {
-        //this.productDialog = false;
         this.clientDialog = false;
         this.submitted = false;
-        this.boolcommercial=false;
-        //this.BoolClientDialog=true;
+        this.StaffDialog=false;
+        this.clientService.getClients().subscribe({next: (data: Client[])=>{this.clients=data;}});
     }
     
-/*
-    deleteProduct(product: Product) {
-        this.deleteProductDialog = true;
-        this.product = { ...product };
-    }
 
-    confirmDeleteSelected() {
-        this.deleteProductsDialog = false;
-        this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-        this.selectedProducts = [];
-        //////
-        //this.deleteClientsDialog = false;
-        //this.clients = this.clients.filter(val => !this.selectedClients.includes(val));
-        //this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'clients Deleted', life: 3000 });
-        //this.selectedClients = [];
-        //////
-    }
-    
-    filterCountry(event: any) {
-        const filtered: any[] = [];
-        const query = event.query;
-        for (let i = 0; i < this.countries.length; i++) {
-            const country = this.countries[i];
-            if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                filtered.push(country);
-            }
-        }
-
-        this.filteredCountries = filtered;
-    }
-
-
- */
-    
     saveClient() {
         this.submitted = true;
-    }
+        
+        if (this.client.company?.trim()&&this.client.iceClient?.trim()&&this.client.address?.trim()&&this.client.city?.trim()&&this.client.codeComptable?.trim()&&this.client.codeAuxi?.trim()&&this.client.defaultCurrencyId ) {
+          
+      
+          if (this.client.clientId) {
+            // Update existing client
+      this.clientService.updateClient(this.client.clientId, this.client).subscribe(
+        response => {
+          //console.log('Response:', response);
+  
+          if (response.message === 'Le client a été modifié avec succès') {
+            // Display success message
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: response.message, life: 3000 });
+            
+          } else {
+            // Display general error message
+            this.messageService.add({severity: 'error',summary: 'Error Message',detail: 'Une erreur s\'est produite lors de la modification du client',life: 3000});
+          }
+        },
+        error => { 
+          //console.error('Error updating client:', error);
+          // Handle error, e.g., display a general error message
+          this.messageService.add({severity: 'error',summary: 'Error Message',detail: 'Une erreur s\'est produite lors de la modification du client',life: 3000});
+        }
+      );
+    } else if (!this.client.clientId) {
+           // console.log("we are trying to create a new client ,this client:", this.client);
+      
+            this.clientService.addNewClient(this.client).subscribe(responseMessage => {
+                //console.log('Response:', responseMessage);
+      
+                if (responseMessage === 'Le client a été ajouté avec succès') {
+                  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Le client a été ajouté avec succès', life: 3000 });
+                }else {
+                    this.messageService.add({severity: 'error',summary: 'Error Message',detail: 'Une erreur s\'est produite lors de la modification du client',life: 3000});
+                }
+              },
+              error => { 
+                //console.error('Error adding this client:', error);
+                    this.messageService.add({severity: 'error',summary: 'Error',detail: 'Cet email est déjà utilisé',life: 3000
+                    });
+                }
+            );
+          }
+          this.clients = [...this.clients];
+          this.clientDialog = false;
+          this.client = {};
+          this.ngOnInit()
+          
+        } else{
+        this.clientDialog = false;
+        this.client = {};
+        this.messageService.add({severity: 'error',summary: 'Error Message',detail: 'Une erreur s\'est produite',life: 3000});
+        }
+      }
 
-    /*    
-
-
-
-            this.cols = [
-            { field: 'company', header: 'company' },
-            { field: 'email', header: 'email'},
-            { field: 'phoneNumber', header: 'phoneNumber' },
-            { field: 'dateCreated', header: 'dateCreated' }
-        ]; 
-
-
-    findIndexByIds(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
-                index = i;
-                break;
-            }
+      AffectCommercial(){
+        if(this.client.clientId&& this.Staff.staffId){
+          this.clientService.affectCommercialToClient(this.client.clientId, this.Staff.staffId).subscribe();
+          this.clients = [...this.clients];
+          this.Staff={}
+          this.StaffDialog = false;
+          this.ngOnInit()
         }
 
-        return index;
-    }
-    
-    saveProduct() {
-        this.submitted = true;
-
-        if (this.product.name?.trim()) {
-            if (this.product.id) {
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-                this.products[this.findIndexByIds(this.product.id)] = this.product;
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-            } else {
-                this.product.id = this.createId();
-                this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-                this.products.push(this.product);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-            }
-
-            this.products = [...this.products];
-            this.productDialog = false;
-            this.product = {};
+      }
+      SupprimerCommercial(){
+        if(this.client.clientId){
+          this.clientService.deleteCommercialOfClient(this.client.clientId).subscribe();
+          this.clients = [...this.clients];
+          this.Staff={}
+          this.StaffDialog = false;
+          this.ngOnInit()
         }
-    }
-    
-    findIndexById(id: bigint): bigint {
-        let index = -1;
-        for (let i = 0; i < this.clients.length; i++) {
-            if (this.clients[i].clientId === id) {
-                index = i;
-                break;
-            }
-        }
+      }
 
-        return index;
-    }
+      formatDate(components: number[]): string {
+        const day = components[2];
+        const month = components[1];
+        const year = components[0];
+        const hour = components[3];
+        const minute = components[4];
+      
+        const formattedDate = `${day}/${month}/${year}  ${hour}:${minute}`;
+        return formattedDate;
+      }
 
-    createId(): string {
-        let id = '';
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
-    }*/
 
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
