@@ -31,10 +31,20 @@ export class ClientService {
     public getClients():Observable<Client[]>{
       return this.http.get<Client[]>(environment.backendHost+"/api/clients/dto/");
    }
-    deleteClientById(id: bigint) {
-    
-       this.http.delete(environment.backendHost+"/api/clients/delete-client/"+id).subscribe();
+
+    deleteClientById(id: bigint):Observable<any> {
+      const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+      const url = `${environment.backendHost}/api/clients/delete-client/${id}`;
+       
+       return this.http.delete<string>(url, httpOptions)
+       .pipe(
+         catchError(error => {
+           console.error('Error deleting client of client:', error);
+           return throwError('Une erreur s\'est produite lors de la suppression du contact');
+         })
+       );
     }
+    
 
 
 

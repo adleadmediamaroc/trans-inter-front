@@ -1,5 +1,5 @@
 export interface ContactClient {
-
+    contactId?:bigint;
     firstName?:string;
     lastName?:string;
     email?:string;

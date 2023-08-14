@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CrudRoutingModule } from './crud-routing.module';
-import { CrudComponent } from './crud.component';
+import { clientRoutingModule } from './client-routing.module';
+import { clientComponent } from './client.component';
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
@@ -28,7 +28,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 @NgModule({
     imports: [
         CommonModule,
-        CrudRoutingModule,
+        clientRoutingModule,
         TableModule,
         FileUploadModule,
         FormsModule,
@@ -49,7 +49,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
         TabViewModule,
         InputSwitchModule
     ],
-    declarations: [CrudComponent, ContactClientComponent],
+    declarations: [clientComponent, ContactClientComponent],
     providers:[ClientService]
 })
-export class CrudModule { }
+export class clientModule { }

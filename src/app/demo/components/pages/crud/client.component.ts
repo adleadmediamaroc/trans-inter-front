@@ -14,10 +14,10 @@ import { Router } from '@angular/router';
 
 
 @Component({
-    templateUrl: './crud.component.html',
+    templateUrl: './client.component.html',
     providers: [MessageService,ClientService,ContactClientService,CurrencyService,CountryService,StaffService]
 })
-export class CrudComponent implements OnInit {
+export class clientComponent implements OnInit {
     countries: Country[] = [];
 
     currencies: Currency[] =[];
@@ -84,7 +84,7 @@ export class CrudComponent implements OnInit {
     }
 
   navigateToContactClient(clientId: bigint) {
-    this.router.navigate(['/pages/crud/ContactClient', clientId]);
+    this.router.navigate(['/pages/client/ContactClient', clientId]);
   }
   
 
