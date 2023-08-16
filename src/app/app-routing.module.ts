@@ -8,14 +8,15 @@ import {DemandeComponent} from "./demo/components/tarification/demande/demande.c
 import {TarifComponent} from "./demo/components/tarification/tarif/tarif.component";
 import {OffresComponent} from "./demo/components/tarification/offres/offres.component";
 import {AuthModule} from "./demo/components/auth/auth.module";
+import {CreerDemandeComponent} from "./demo/components/tarification/creer-demande/creer-demande.component";
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
             {
-                path: 'app', component: AppLayoutComponent,
+                path: '', component: AppLayoutComponent,
                 children: [
-                    { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+                    { path: 'app', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'app/demande', component:DemandeComponent, },
                     { path: 'app/tarif', component:TarifComponent, },
                     { path: 'app/offre', component:OffresComponent, },
@@ -25,6 +26,7 @@ import {AuthModule} from "./demo/components/auth/auth.module";
                     { path: 'app/blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
                     { path: 'app/pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
                     { path: 'app/ajouterCollaborateur', component: AjouterCollaborateurComponent },
+                    { path: 'app/demande/creerDemande', component: CreerDemandeComponent },
                     { path: 'app/role', component: RoleComponent },
 
                 ]

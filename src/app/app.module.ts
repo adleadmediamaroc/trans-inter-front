@@ -14,7 +14,7 @@ import { PhotoService } from './demo/service/photo.service';
 import { AjouterCollaborateurComponent } from './ajouter-collaborateur/ajouter-collaborateur.component';
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {TableModule} from "primeng/table";
@@ -25,10 +25,13 @@ import {RatingModule} from "primeng/rating";
 import { DemandeComponent } from './demo/components/tarification/demande/demande.component';
 import { TarifComponent } from './demo/components/tarification/tarif/tarif.component';
 import { OffresComponent } from './demo/components/tarification/offres/offres.component';
+import { CreerDemandeComponent } from './demo/components/tarification/creer-demande/creer-demande.component';
+import {ChartModule} from "primeng/chart";
+
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, AjouterCollaborateurComponent,RoleComponent, DemandeComponent, TarifComponent, OffresComponent
+        AppComponent, NotfoundComponent, AjouterCollaborateurComponent,RoleComponent, DemandeComponent, TarifComponent, OffresComponent, CreerDemandeComponent
     ],
     imports: [
         AppRoutingModule,
@@ -45,6 +48,8 @@ import { OffresComponent } from './demo/components/tarification/offres/offres.co
         DataViewModule,
         DropdownModule,
         RatingModule,
+        ReactiveFormsModule,
+        ChartModule,
 
     ],
     providers: [

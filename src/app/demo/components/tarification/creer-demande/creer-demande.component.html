@@ -1,0 +1,31 @@
+<div class="grid p-fluid justify-content-center">
+    <div class="col-12 lg:col-6">
+        <div class="card">
+            <div class="d-flex justify-content-center">
+                <select class="form-select general-service me-3 py-2" [(ngModel)]="selectedGeneralService" style="margin-right: 20px">
+                    <option value="land">Terre</option>
+                    <option value="sea">Mer</option>
+                </select>
+
+                <select class="form-select service-direction me-3 py-2" [(ngModel)]="selectedServiceDirection">
+                    <option value="inbound">Entrant(e)</option>
+                    <option value="outbound">Sortant(e)</option>
+                    <option value="domestic">National(e)</option>
+                    <option value="customs_clearance">Dédouanement</option>
+                </select>
+                <br>
+                <button pButton pRipple class="btn btn-primary text-center" (click)="creerDemande()" style="margin-left:90px ;margin-top:20px;width: 30%">Créer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div *ngIf="showForm" class="demande-form">
+    <h2>Créer Nouvelle Demande ({{ selectedGeneralService }} - {{ selectedServiceDirection }})</h2>
+    <form [formGroup]="demandeForm" (ngSubmit)="submitDemande()">
+       
+        <button type="submit" class="button success" [disabled]="!demandeForm.valid">Créer Demande</button>
+    </form>
+</div>
