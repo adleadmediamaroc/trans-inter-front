@@ -36,14 +36,14 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['app/uikit/input'] },
                     { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['app/uikit/floatlabel'] },
                     { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['app/uikit/invalidstate'] },
-                    { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'] },
-                    { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'] },
-                    { label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list'] },
-                    { label: 'Tree', icon: 'pi pi-fw pi-share-alt', routerLink: ['/uikit/tree'] },
-                    { label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel'] },
-                    { label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay'] },
-                    { label: 'Media', icon: 'pi pi-fw pi-image', routerLink: ['/uikit/media'] },
-                    { label: 'Menu', icon: 'pi pi-fw pi-bars', routerLink: ['/uikit/menu'], routerLinkActiveOptions: { paths: 'subset', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored' } },
+                    { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['app/uikit/button'] },
+                    { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['app/uikit/table'] },
+                    { label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['app/uikit/list'] },
+                    { label: 'Tree', icon: 'pi pi-fw pi-share-alt', routerLink: ['app/uikit/tree'] },
+                    { label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['app/uikit/panel'] },
+                    { label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['app/uikit/overlay'] },
+                    { label: 'Media', icon: 'pi pi-fw pi-image', routerLink: ['app/uikit/media'] },
+                    { label: 'Menu', icon: 'pi pi-fw pi-bars', routerLink: ['app/uikit/menu'], routerLinkActiveOptions: { paths: 'subset', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored' } },
                     { label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['app/uikit/message'] },
                     { label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['app/uikit/file'] },
                     { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['app/uikit/charts'] },
@@ -71,7 +71,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Landing',
                         icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/landing']
+                        routerLink: ['app/landing']
                     },
                    /* {
                         label: 'Auth',
@@ -107,12 +107,12 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Not Found',
                         icon: 'pi pi-fw pi-exclamation-circle',
-                        routerLink: ['/notfound']
+                        routerLink: ['app/notfound']
                     },
                     {
                         label: 'Empty',
                         icon: 'pi pi-fw pi-circle-off',
-                        routerLink: ['/pages/empty']
+                        routerLink: ['app//pages/empty']
                     },
                 ]
             },
@@ -162,7 +162,7 @@ export class AppMenuComponent implements OnInit {
                 label: 'Get Started',
                 items: [
                     {
-                        label: 'Documentation', icon: 'pi pi-fw pi-question', routerLink: ['/documentation']
+                        label: 'Documentation', icon: 'pi pi-fw pi-question', routerLink: ['app/documentation']
                     },
                     {
                         label: 'View Source', icon: 'pi pi-fw pi-search', url: ['https://github.com/primefaces/sakai-ng'], target: '_blank'

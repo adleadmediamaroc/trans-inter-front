@@ -27,6 +27,10 @@ import { TarifComponent } from './demo/components/tarification/tarif/tarif.compo
 import { OffresComponent } from './demo/components/tarification/offres/offres.component';
 import { CreerDemandeComponent } from './demo/components/tarification/creer-demande/creer-demande.component';
 import {ChartModule} from "primeng/chart";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {ListboxModule} from "primeng/listbox";
+import {MultiSelectModule} from "primeng/multiselect";
+import {RadioButtonModule} from "primeng/radiobutton";
 
 
 @NgModule({
@@ -50,6 +54,10 @@ import {ChartModule} from "primeng/chart";
         RatingModule,
         ReactiveFormsModule,
         ChartModule,
+        InputTextareaModule,
+        ListboxModule,
+        MultiSelectModule,
+        RadioButtonModule,
 
     ],
     providers: [
