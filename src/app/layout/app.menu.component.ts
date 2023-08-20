@@ -66,7 +66,7 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'Auth',
-                        icon: 'pi pi-fw pi-user',
+                        icon: 'pi pi-fw pi-circle-off',
                         items: [
                             {
                                 label: 'Login',
@@ -96,6 +96,11 @@ export class AppMenuComponent implements OnInit {
                         label: 'Client',
                         icon: 'pi pi-fw pi-building',
                         routerLink: ['/pages/crud']
+                    },
+                    {
+                        label: 'Agent',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/pages/agent']
                     },
                     ////////
 
