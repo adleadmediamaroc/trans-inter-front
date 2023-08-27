@@ -1,6 +1,7 @@
 export interface Agent {
 
     agentId?: bigint;
+    name?:string;
     company ?: string;
     phoneNumber?: string;
     email?: string;
@@ -10,6 +11,7 @@ export interface Agent {
     city?: string;
     zip?: string;
     countryId?: bigint;
+    countryLongName?:string;
     defaultCurrencyId?: bigint;
     patente?: number;
     billingStreet?: string;

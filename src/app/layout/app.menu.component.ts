@@ -105,9 +105,9 @@ export class AppMenuComponent implements OnInit {
                     ////////
 
                     {
-                        label: 'Timeline',
+                        label: 'Tâches',
                         icon: 'pi pi-fw pi-calendar',
-                        routerLink: ['/pages/timeline']
+                        routerLink: ['/pages/task']
                     },
                     {
                         label: 'Not Found',

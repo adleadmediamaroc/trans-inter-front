@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TimelineDemoComponent } from './timelinedemo.component';
+import { TaskComponent } from './task.component';
 
 @NgModule({
     imports: [RouterModule.forChild([
-        { path: '', component: TimelineDemoComponent }
+        { path: '', component: TaskComponent }
     ])],
     exports: [RouterModule]
 })
-export class TimelineDemoRoutingModule { }
+export class TaskRoutingModule { }

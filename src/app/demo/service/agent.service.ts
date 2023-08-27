@@ -46,4 +46,12 @@ export class AgentService {
     agentActiveChange(agent: Agent) {
         this.http.put( environment.backendHost+"/api/agents/" + agent.agentId+"/active?active="+ agent.active,null).subscribe();
     }
+
+    getAgentById(id: bigint):Observable<Agent> {
+
+        return this.http.get<Agent>(environment.backendHost+"/api/agents/"+id);
+    }
+
+
+
 }
