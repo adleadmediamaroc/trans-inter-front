@@ -61,26 +61,19 @@ export class clientComponent implements OnInit {
       private StaffService: StaffService) { }
 
     ngOnInit() {
-        
-        this.clientService.countClients().subscribe({next: (data: number)=>{this.Total_Clients =data;}});
-        this.clientService.countActiveClients().subscribe({next: (data: number)=>{this.Total_Active_Clients =data;}});
-        this.clientService.countInactiveClients().subscribe({next: (data: number)=>{this.Total_Inactive_Clients =data;}});
+      this.clientService.countClients().subscribe({next: (data: number)=>{this.Total_Clients =data;}});
+      this.clientService.countActiveClients().subscribe({next: (data: number)=>{this.Total_Active_Clients =data;}});
+      this.clientService.countInactiveClients().subscribe({next: (data: number)=>{this.Total_Inactive_Clients =data;}});
 
-        this.contactService.countContacts().subscribe({next: (data: number)=>{this.Total_Contacts =data;}});
-        this.contactService.countActiveContacts().subscribe({next: (data: number)=>{this.Total_Active_Contacts =data;}});
-        this.contactService.countInactiveContacts().subscribe({next: (data: number)=>{this.Total_Inactive_Contacts =data;}});
+      this.contactService.countContacts().subscribe({next: (data: number)=>{this.Total_Contacts =data;}});
+      this.contactService.countActiveContacts().subscribe({next: (data: number)=>{this.Total_Active_Contacts =data;}});
+      this.contactService.countInactiveContacts().subscribe({next: (data: number)=>{this.Total_Inactive_Contacts =data;}});
        
-        this.clientService.getClients().subscribe({next: (data: Client[])=>{this.clients=data;}});
-
-        this.countryService.getAllCountries().subscribe({next:(data:Country[])=> {this.countries = data;}});
-        this.currencyService.getAllCurrencies().subscribe({next:(data:Currency[])=> {this.currencies=data;}});
+      this.clientService.getClients().subscribe({next: (data: Client[])=>{this.clients=data;}});
+      this.StaffService.listStaff().subscribe({next:(data:Staff[])=> {this.listStaff=data;}});
         
-        this.StaffService.listStaff().subscribe({next:(data:Staff[])=> {this.listStaff=data;}});
-         // Generate a unique bigint based on current timestamp const uniqueId = BigInt(Date.now()); data.push({ staffId: uniqueId, lastName: "None", firstName: "" });
-
-         //this.clientService.clients$.subscribe(updatedClients => {this.clients = updatedClients;});
-   
-
+      this.countryService.getAllCountries().subscribe({next:(data:Country[])=> {this.countries = data;}});
+      this.currencyService.getAllCurrencies().subscribe({next:(data:Currency[])=> {this.currencies=data;}});
     }
 
   navigateToContactClient(clientId: bigint) {
@@ -187,7 +180,7 @@ export class clientComponent implements OnInit {
                 if (responseMessage === 'Le client a été ajouté avec succès') {
                   this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Le client a été ajouté avec succès', life: 3000 });
                 }else {
-                  this.messageService.add({severity: 'error',summary: 'Error Message',detail: 'Une erreur s\'est produite lors de la modification du client',life: 3000});
+                  this.messageService.add({severity: 'error',summary: 'Error Message',detail: 'Une erreur s\'est produite lors de l\'ajout du client',life: 3000});
                 }
               },error => {  this.messageService.add({severity: 'error',summary: 'Error',detail: 'Cet email est déjà utilisé',life: 3000
                     });

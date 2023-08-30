@@ -10,7 +10,7 @@ export class ClientService {
 
   private clientsSubject = new BehaviorSubject<Client[]>([]);
   clients$: Observable<Client[]> = this.clientsSubject.asObservable();
-    num=0;
+  
 
     constructor(private http:HttpClient) {}
     
@@ -77,9 +77,9 @@ export class ClientService {
         );
     }
 
- 
+  
 
-    updateClient(id: bigint, clientDto: Client): Observable<any> {
+      updateClient(id: bigint, clientDto: Client): Observable<any> {
       const url = `${environment.backendHost}/api/clients/update-client/${id}`;
       const httpOptions = {
         headers: new HttpHeaders({
