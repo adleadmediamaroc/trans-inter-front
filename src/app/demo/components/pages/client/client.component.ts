@@ -11,6 +11,7 @@ import { CurrencyService } from 'src/app/demo/service/currency.service';
 import { StaffService } from 'src/app/demo/service/staff.service';
 import { Staff } from 'src/app/demo/api/Staff';
 import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
 
 
 @Component({
@@ -69,7 +70,7 @@ export class clientComponent implements OnInit {
       this.contactService.countActiveContacts().subscribe({next: (data: number)=>{this.Total_Active_Contacts =data;}});
       this.contactService.countInactiveContacts().subscribe({next: (data: number)=>{this.Total_Inactive_Contacts =data;}});
        
-      this.clientService.getClients().subscribe({next: (data: Client[])=>{this.clients=data;}});
+      this.clientService.getClients().subscribe({next: (data: Client[])=>{this.clients=data;console.log(data);}});
       this.StaffService.listStaff().subscribe({next:(data:Staff[])=> {this.listStaff=data;}});
         
       this.countryService.getAllCountries().subscribe({next:(data:Country[])=> {this.countries = data;}});
@@ -143,10 +144,11 @@ export class clientComponent implements OnInit {
       this.clientService.deleteClientById(this.client.clientId!).subscribe(
         response => {
           if (response.message === 'Le client a été supprimé avec succès') {
+            this.clientService.getClients().subscribe({next: (data: Client[])=>{this.clients=data;}});
+            this.clients = this.clients.filter(val => val.clientId !== this.client.clientId);
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: response.message, life: 3000 });
-            
           }else{
-            this.messageService.add({severity: 'error',summary: 'Error Message',detail: 'Une erreur s\'est produite lors de la suppression du cllient',life: 3000});
+            this.messageService.add({severity: 'error',summary: 'Error Message',detail: 'Une erreur s\'est produite lors de la suppression du client',life: 3000});
           }
         })
         this.client = {};
@@ -237,6 +239,49 @@ export class clientComponent implements OnInit {
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
+
+    exportToExcel(): void {
+      const columnsToExport = [
+        {field:'company', header: 'Societé' },
+        {field:'staffFullName', header: 'Commercial'},
+        {field:'email', header: 'Email' },
+        {field:'phoneNumber', header: 'Tél' }];
+      let filteredData = this.clients.map((row: Client) => {
+        const newRow: any = {};
+        for (const column of columnsToExport) newRow[column.header] = row[column.field as keyof Client];
+        return newRow;
+      });
+
+      const headers = columnsToExport.map(column => column.header);
+      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filteredData, { header: headers });
+      const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+
+      const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+      const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = 'liste-Clients.xlsx';
+      downloadLink.click();
+
+  }
+
+  copierAdresseFacturation() {
+    this.client.shippingCountryId = this.client.billingCountryId;
+    this.client.shippingState = this.client.billingState;
+    this.client.shippingCity = this.client.billingCity;
+    this.client.shippingStreet = this.client.billingStreet;
+    this.client.shippingZip = this.client.billingZip;
+  }
+
+  copierAdressePrincipal() {
+    this.client.billingCountryId= this.client.countryId;
+    this.client.billingCity= this.client.city;
+    this.client.billingStreet= this.client.address;
+    this.client.billingZip= this.client.zip;
+  }
+
+
 }
 
 

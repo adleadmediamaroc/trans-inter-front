@@ -7,6 +7,7 @@
                 <ng-template pTemplate="left">
                     <div class="my-2" >
                         <button pButton pRipple label="Ajouter Opportunity" icon="pi pi-plus" class="p-button-raised mr-2" (click)="ajouterOpportunity()"></button>
+                        <button pButton pRipple type="button" label="Exporter"  icon="pi pi-upload" class="p-button-secondary" (click)="exportToExcel()"></button>
                     </div>
                 </ng-template>    
             </p-toolbar>
@@ -60,19 +61,19 @@
                 <div class="form-columns formgroup-inline">
                         <div class="form-column col-12 md:col-6">
                             <div class="field ">
-                                <label for="startDate">Date de debut</label>
+                                <label for="startDate"><span style="color:red" >* </span>Date de debut</label>
                                 <p-calendar id="startDate" [(ngModel)]="opportunity.startDate"[showIcon]="true" inputId="icon" autofocus  [ngClass]="{'ng-invalid ng-dirty' : submitted && !opportunity.startDate}"/>
-                                 <small class="ng-dirty ng-invalid" *ngIf="submitted && !opportunity.startDate">is required.</small>
+                                 <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.startDate"><span style="color:red" >is required.</span></small>
                             </div>
                             <div class="field ">
-                                <label for="clientid">Client</label>
-                                <p-dropdown [options]="clients" optionLabel="company" optionValue="clientId" dataKey="clientId" [(ngModel)]="opportunity.clientid"></p-dropdown>
-                                 <small class="ng-dirty ng-invalid" *ngIf="submitted && !opportunity.clientid">is required.</small>
+                                <label for="clientid"> <span style="color:red" >* </span>Client</label>
+                                <p-dropdown [options]="clients" placeholder="Selectionner..." optionLabel="company" optionValue="clientId" dataKey="clientId" [(ngModel)]="opportunity.clientid"></p-dropdown>
+                                 <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.clientid"><span style="color:red" >is required.</span></small>
                             </div>
                             <div class="field ">
-                                <label for="activity">secteur d'activité</label>
+                                <label for="activity"> <span style="color:red" >* </span>secteur d'activité</label>
                                 <input type="text" pInputText id="activity" [(ngModel)]="opportunity.activity" />
-                                 <small class="ng-dirty ng-invalid" *ngIf="submitted && !opportunity.activity">is required.</small>
+                                 <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.activity"><span style="color:red" >is required.</span></small>
                             </div>
                             <div class="form-columns formgroup-inline">
                                 <div class="form-column col-12 md:col-6">
@@ -88,21 +89,35 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-columns formgroup-inline">
+                                <div class="form-column col-12 md:col-6">
+                                    <div class="field ">
+                                        <label for="expectedRevenue">Revenu prévu</label>
+                                        <p-inputNumber id="expectedRevenue" [(ngModel)]="opportunity.expectedRevenue"mode="decimal"  [min]="0"></p-inputNumber>
+                                    </div>
+                                </div>
+                                <div class="form-column col-12 md:col-6">
+                                    <div class="field ">
+                                        <label for="expectedBigProfit">bénéfice brut attendu</label>
+                                        <p-inputNumber id="expectedBigProfit" [(ngModel)]="opportunity.expectedBigProfit"mode="decimal"  [min]="0"></p-inputNumber>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-column col-12 md:col-6">
                             <div class="field ">
-                                <label for="startDate">Date de Fin</label>
+                                <label for="startDate"> <span style="color:red" >* </span>Date de Fin</label>
                                 <p-calendar id="endDate" [(ngModel)]="opportunity.endDate"[showIcon]="true" inputId="icon" autofocus  [ngClass]="{'ng-invalid ng-dirty' : submitted && !opportunity.endDate}"/>
-                                 <small class="ng-dirty ng-invalid" *ngIf="submitted && !opportunity.endDate">is required.</small>
+                                 <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.endDate"><span style="color:red" >is required.</span></small>
                             </div>
                             <div class="field ">
-                                <label for="service">Service</label>
+                                <label for="service"><span style="color:red" >* </span>Service</label>
                                 <input type="text" pInputText id="service" [(ngModel)]="opportunity.service" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !opportunity.service}"/>
-                                 <small class="ng-dirty ng-invalid" *ngIf="submitted && !opportunity.service"> is required.</small>
+                                 <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.service"> <span style="color:red" >is required.</span></small>
                             </div>
                             <div class="field ">
                                 <label for="staffid">commercial</label>
-                                <p-dropdown [options]="listStaff" [(ngModel)]="opportunity.staffid" [virtualScroll]="true" placeholder="Selectionner un Commercial" [virtualScrollItemSize]="20" optionLabel="lastName" optionValue="staffId" dataKey="staffId" (ngModelChange)="onStaffSelectionChange($event)">
+                                <p-dropdown [options]="listStaff" placeholder="Selectionner..." [(ngModel)]="opportunity.staffid" [virtualScroll]="true" placeholder="Selectionner un Commercial" [virtualScrollItemSize]="20" optionLabel="lastName" optionValue="staffId" dataKey="staffId" (ngModelChange)="onStaffSelectionChange($event)">
                                     <ng-template let-staff pTemplate="selectedItem">
                                       {{ staff.firstName  + ' ' + staff.lastName}}
                                     </ng-template>
@@ -121,42 +136,42 @@
                         <div class="form-columns formgroup-inline">
                             <div class="form-column col-12 md:col-6">
                                 <div class="field">
-                                    <label for="origineAddressType">Type d'adresse</label>
-                                    <p-dropdown [options]="AddressTypes" optionLabel="AddressType" optionValue="AddressType"  [(ngModel)]="opportunity.origineAddressType"></p-dropdown>
-                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !opportunity.origineAddressType">is required.</small>
+                                    <label for="origineAddressType"><span style="color:red" >* </span>Type d'adresse</label>
+                                    <p-dropdown [options]="AddressTypes" placeholder="Selectionner..." optionLabel="AddressType" optionValue="AddressType"  [(ngModel)]="opportunity.origineAddressType"></p-dropdown>
+                                    <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.origineAddressType"><span style="color:red" >is required.</span></small>
                                 </div>
                             </div>
                             <div class="form-column col-12 md:col-6">
                                 <div class="field ">
-                                    <label for="origineCountry">Pays</label>
-                                    <p-dropdown [options]="countries" optionLabel="longName" optionValue="longName" [(ngModel)]="opportunity.origineCountry"></p-dropdown>
-                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !opportunity.origineCountry">is required.</small>
+                                    <label for="origineCountry"><span style="color:red" >* </span>Pays</label>
+                                    <p-dropdown [options]="countries" placeholder="Selectionner..." optionLabel="longName" optionValue="longName" [(ngModel)]="opportunity.origineCountry"></p-dropdown>
+                                    <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.origineCountry"><span style="color:red" >is required.</span></small>
                                 </div>
                             </div>
                         </div>
                         <div class="field ">
-                            <label for="origineAddress">Adresse</label>
+                            <label for="origineAddress"><span style="color:red" >* </span>Adresse</label>
                             <textarea id="origineAddress" pInputTextarea [(ngModel)]="opportunity.origineAddress"  rows="3" cols="20" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !opportunity.origineAddress}" ></textarea>
-                            <small class="ng-dirty ng-invalid" *ngIf="submitted && !opportunity.origineAddress"> is required.</small>
+                            <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.origineAddress"> <span style="color:red" >is required.</span></small>
                         </div>
                     </p-fieldset>
                     <p-fieldset legend="Destination (facultatif)" [toggleable]="true" class="line-height-3 m-0">
                         <div class="form-columns formgroup-inline">
                             <div class="form-column col-12 md:col-6">
                                 <div class="field ">
-                                    <label for="destinationAddressType">Type d'addresse</label>
-                                    <p-dropdown [options]="AddressTypes" optionLabel="AddressType" optionValue="AddressType"  [(ngModel)]="opportunity.destinationAddressType"></p-dropdown>   
+                                    <label for="destinationAddressType">Type d'adresse</label>
+                                    <p-dropdown [options]="AddressTypes"  placeholder="Selectionner..." optionLabel="AddressType" optionValue="AddressType"  [(ngModel)]="opportunity.destinationAddressType"></p-dropdown>   
                                 </div>
                             </div>
                             <div class="form-column col-12 md:col-6">
                                 <div class="field ">
                                     <label for="destinationAddressType">Pays</label>
-                                    <p-dropdown [options]="countries" optionLabel="longName" optionValue="longName" [(ngModel)]="opportunity.destinationCountry"></p-dropdown>
+                                    <p-dropdown [options]="countries" placeholder="Selectionner..." optionLabel="longName" optionValue="longName" [(ngModel)]="opportunity.destinationCountry"></p-dropdown>
                                 </div>
                             </div>
                         </div>
                         <div class="field ">
-                            <label for="destinationAddress">Addresse</label>
+                            <label for="destinationAddress">Adresse</label>
                             <textarea id="destinationAddress" pInputTextarea [(ngModel)]="opportunity.destinationAddress"  rows="3" cols="20" ></textarea>
                         </div>
                     </p-fieldset>
@@ -167,7 +182,7 @@
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="MisajouropportunityDialog" [style]="{width: '800px'}" header=" Mis à jour" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="MisajouropportunityDialog" [style]="{width:'800px'}" header=" Mis à jour" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
                 <div class="card formgroup-inline">
                     <div class="form-column col-12 md:col-4">

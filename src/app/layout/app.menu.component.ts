@@ -66,7 +66,7 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'Auth',
-                        icon: 'pi pi-fw pi-user',
+                        icon: 'pi pi-fw pi-circle-off',
                         items: [
                             {
                                 label: 'Login',
@@ -98,12 +98,17 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-building',
                         routerLink: ['/pages/client']
                     },
+                    {
+                        label: 'Agent',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/pages/agent']
+                    },
                     ////////
 
                     {
-                        label: 'Timeline',
+                        label: 'Tâches',
                         icon: 'pi pi-fw pi-calendar',
-                        routerLink: ['/pages/timeline']
+                        routerLink: ['/pages/task']
                     },
                     {
                         label: 'Not Found',

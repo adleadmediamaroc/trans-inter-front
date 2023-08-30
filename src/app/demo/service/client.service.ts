@@ -4,6 +4,7 @@ import { Client } from '../api/Client';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject, catchError, map, tap, throwError } from 'rxjs';
+import {Agent} from "../api/Agent";
 
 @Injectable()
 export class ClientService {
@@ -13,7 +14,7 @@ export class ClientService {
   
 
     constructor(private http:HttpClient) {}
-    
+
 
     public countClients(): Observable<number>{
         return this.http.get<number>(environment.backendHost+"/api/clients/Total-Clients");
@@ -35,7 +36,7 @@ export class ClientService {
     deleteClientById(id: bigint):Observable<any> {
       const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
       const url = `${environment.backendHost}/api/clients/delete-client/${id}`;
-       
+
        return this.http.delete<string>(url, httpOptions)
        .pipe(
          catchError(error => {
@@ -44,7 +45,7 @@ export class ClientService {
          })
        );
     }
-    
+
 
 
 
@@ -56,7 +57,7 @@ export class ClientService {
         })
       };
 
-    
+
       return this.http.post<any>(url, clientDto, httpOptions)
         .pipe(
           map(response => {
@@ -77,8 +78,6 @@ export class ClientService {
         );
     }
 
-  
-
       updateClient(id: bigint, clientDto: Client): Observable<any> {
       const url = `${environment.backendHost}/api/clients/update-client/${id}`;
       const httpOptions = {
@@ -86,18 +85,18 @@ export class ClientService {
           'Content-Type': 'application/json'
         })
       };
-  
-      
+
+
       return this.http.post<any>(url, clientDto, httpOptions).pipe(
         tap(() => {
-          
+
           const updatedClients = this.clientsSubject.value.map(client => {
             if (client.clientId === id) {
-              return { ...client, ...clientDto }; 
+              return { ...client, ...clientDto };
             }
             return client;
           });
-    
+
           this.clientsSubject.next(updatedClients);
         }),
         catchError(error => {
@@ -117,11 +116,11 @@ export class ClientService {
         }
       ));
     }
-  
+
     deleteCommercialOfClient(clientId: bigint): Observable<string> {
       const url = `${environment.backendHost}/api/clients/update-client/${clientId}/delete-commercial`;
       const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
-  
+
       return this.http.delete<string>(url, httpOptions)
         .pipe(
           catchError(error => {
@@ -130,6 +129,11 @@ export class ClientService {
           })
         );
     }
-      
-        
+
+    getClientById(id: bigint):Observable<Client> {
+
+        return this.http.get<Client>(environment.backendHost+"/api/clients/"+id);
+    }
+
+
 }

@@ -86,29 +86,29 @@
                     
                 </div>
                 <div class="field ">
-                    <label for="lastName">Nom</label>
+                    <label for="lastName"><span style="color:red" >* </span>Nom</label>
                     <input type="text" pInputText id="lastName" [(ngModel)]="contact.lastName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !contact.lastName}"/>
-                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !contact.lastName">is required.</small>
+                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !contact.lastName"><span style="color:red" >is required.</span></small>
                 </div>
                 <div class="field ">
-                    <label for="firstName">Prénom</label>
+                    <label for="firstName"><span style="color:red" >* </span>Prénom</label>
                     <input type="text" pInputText id="firstName" [(ngModel)]="contact.firstName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !contact.firstName}"/>
-                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !contact.firstName">is required.</small>
+                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !contact.firstName"><span style="color:red" >is required.</span></small>
                 </div>
                 <div class="field ">
-                    <label for="title">Position</label>
+                    <label for="title"><span style="color:red" >* </span>Position</label>
                     <input type="text" pInputText id="title" [(ngModel)]="contact.title" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !contact.title}"/>
-                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !contact.title">is required.</small>
+                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !contact.title"><span style="color:red" >is required.</span></small>
                 </div>
                 <div class="field ">
-                    <label for="email">Email</label>
+                    <label for="email"><span style="color:red" >* </span>Email</label>
                     <input type="email" pInputText id="email" [(ngModel)]="contact.email" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !contact.email}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !contact.email">is required.</small>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !contact.email"><span style="color:red" >is required.</span></small>
                 </div>
                 <div class="field ">
-                    <label for="phoneNumber">Téléphone</label>
+                    <label for="phoneNumber"><span style="color:red" >* </span>Téléphone</label>
                     <input type="text" pInputText id="phoneNumber" [(ngModel)]="contact.phoneNumber" />
-                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !contact.phoneNumber">is required.</small>
+                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !contact.phoneNumber"><span style="color:red" >is required.</span></small>
                 </div>
                 <div class="field ">
                     <label for="direction">Direction</label>

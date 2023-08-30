@@ -1,6 +1,7 @@
 export interface Client {
-    
+
     clientId?: bigint;
+    name?:string;
     company ?: string;
     iceClient?: string;
     phoneNumber?: string;
@@ -15,7 +16,7 @@ export interface Client {
     city?: string;
     zip?: string;
     countryId?: bigint;
-    
+
     codeComptable?: string;
     codeAuxi?: string;
     defaultCurrencyId?: bigint;
@@ -31,12 +32,12 @@ export interface Client {
     shippingState?: string;
     shippingCity?: string;
     shippingZip?: string;
-    shippingCountryId?: string;
+    shippingCountryId?: bigint;
 
     dateAffectation?:Date;
     staffFullName?:string;
     staffId?: bigint;
-   
+
 
     /*
     state?: string;
@@ -45,7 +46,7 @@ export interface Client {
 
 
     longitude?: string;
-    latitude?: string; 
+    latitude?: string;
     defaultLanguage?: string;
     showPrimaryContact?:Boolean;
     DateAffectationOfCommercial?: Date;
@@ -60,6 +61,6 @@ export interface Client {
 
 
 
-    
+
 
 }

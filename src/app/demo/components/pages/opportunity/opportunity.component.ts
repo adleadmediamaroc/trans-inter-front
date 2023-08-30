@@ -14,6 +14,7 @@ import { ClientService } from 'src/app/demo/service/client.service';
 import { OpportunityService } from 'src/app/demo/service/opportunity.service';
 import { MisajourOpportunityService } from 'src/app/demo/service/MisajourOpportunity.service';
 import { MisajourOpportunity } from 'src/app/demo/api/MisajourOpportunity';
+import * as XLSX from 'xlsx';
 
 
 @Component({
@@ -123,7 +124,7 @@ export class opportunityComponent implements OnInit {
 
     saveopportunity() {
       this.submitted = true;
-        if (this.opportunity.startDate&&this.opportunity.endDate&&this.opportunity.service?.trim()&&this.opportunity.staffid&&this.opportunity.competition&&this.opportunity.origineAddressType&&this.opportunity.origineCountry&&this.opportunity.origineAddress?.trim()&&this.opportunity.clientid) {
+        if (this.opportunity.startDate&&this.opportunity.endDate&&this.opportunity.service?.trim()&&this.opportunity.staffid&&this.opportunity.competition&&this.opportunity.origineAddressType&&this.opportunity.origineCountry&&this.opportunity.origineAddress?.trim()&&this.opportunity.clientid&&this.opportunity.activity?.trim()) {
           if (this.opportunity.opportunityid) {
             console.log("la modification de opportunity", this.opportunity);// la modification de opportunity
             this.opportunityService.updateOpportunity(this.opportunity.opportunityid, this.opportunity).subscribe(
@@ -178,6 +179,33 @@ export class opportunityComponent implements OnInit {
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
+
+    exportToExcel(): void {
+      const columnsToExport = [
+        {field:'clientName', header: 'Client' },
+        {field:'service', header: 'Service'},
+        {field:'volume', header: 'Volume' },
+        {field:'volumeUnit', header: 'Unité' },
+      ];
+      let filteredData = this.opportunities.map((row: opportunity) => {
+        const newRow: any = {};
+        for (const column of columnsToExport) newRow[column.header] = row[column.field as keyof opportunity];
+        return newRow;
+      });
+
+      const headers = columnsToExport.map(column => column.header);
+      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filteredData, { header: headers });
+      const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+
+      const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+      const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = 'liste-Opprtunity.xlsx';
+      downloadLink.click();
+
+  }
 }
 
 
