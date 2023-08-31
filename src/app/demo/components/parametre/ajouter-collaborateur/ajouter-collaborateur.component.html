@@ -1,0 +1,218 @@
+<div class="d-flex justify-content-center">
+    <button (click)="profileColl()" [ngClass]="{'selected': isSelected}" pButton pRipple type="button" label="Profile" class="p-button-outlined p-mr-2 p-mb-2 custom-button"></button>
+    <button (click)="permissionColl()" [ngClass]="{'selected': Selected}" pButton pRipple type="button" label="Permission des modules" class="p-button-outlined p-mr-2 p-mb-2 custom-button"></button>
+</div>
+<div class="d-flex justify-content-center" >
+    <div class="col-md-10 p-3">
+        <div class="card shadow">
+            <div *ngIf="profile" class="tab-pane fade  show active" >
+                <form  (ngSubmit)="addCollaborateur()" #form="ngForm">
+                    <div class="card p-fluid ">
+                        <div class="form-check d-flex  mb-4">
+                            <input
+                                class="form-check-input me-2"
+                                type="checkbox"
+                                value=""
+                                id="quth"
+                                aria-describedby="registerCheckHelpText"
+                            />
+                            <label class="form-check-label" for="registerCheck">
+                                Autoriser l'authentification à deux etapes
+                            </label>
+                        </div>
+                        <div class="form-check d-flex  mb-4">
+                            <input class="form-check-input me-2"  type="checkbox"  value="" id="perso"  aria-describedby="registerCheckHelpText" [(ngModel)]="collaborateur.is_not_staff" name="notstaff"/>
+                            <label class="form-check-label" for="registerCheck">
+                                Ce n'est pas un membre de personnel
+                            </label>
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label required-field"  htmlFor="name1">Prenom</label>
+                            <input pInputText id="name1" type="text" class="form-control" [(ngModel)]="collaborateur.firstName" required="required" name="firstName" />
+                        </div>
+                        <div class="field">
+                            <label class="form-label required-field" htmlFor="lastname">Nom</label>
+                            <input pInputText id="lastname" type="text"  class="form-control" [(ngModel)]="collaborateur.lastName" name="lastName" required />
+                        </div>
+
+                        <div class="field">
+                            <label htmlFor="email1" class="form-label required-field">Email</label>
+                            <input pInputText id="email1" type="text" class="form-control" [(ngModel)]="collaborateur.email" name="email" required />
+                        </div>
+
+
+                        <div class="field">
+                            <label htmlFor="tel" class="form-label ">Telephone</label>
+                            <input pInputText id="tel" type="text" class="form-control" [(ngModel)]="collaborateur.phoneNumber" name="phoneNumber" />
+                        </div>
+                        <div class="form-outline field">
+                            <label htmlFor="signature" class="form-label ">Signature Email</label>
+                            <input pInputText id="signature" type="text" class="form-control" [(ngModel)]="collaborateur.emailSignature" name="emailSignature" />
+                        </div>
+
+                        <div class="form-check d-flex  mb-4">
+                            <input
+                                class="form-check-input me-2"
+                                type="checkbox"
+                                value=""
+                                id="admin"
+                                aria-describedby="registerCheckHelpText"
+                                [(ngModel)]="collaborateur.admin"
+                                name="admin"
+                            />
+                            <label class="form-check-label" for="registerCheck">
+                                Definir comme administrateur
+                            </label>
+                        </div>
+                        <div class="form-check d-flex  mb-4">
+                            <input
+                                class="form-check-input me-2"
+                                type="checkbox"
+                                value=""
+                                id="registerCheck"
+                                checked
+                                aria-describedby="registerCheckHelpText"
+                            />
+                            <label class="form-check-label" for="registerCheck">
+                                Envoyer un email de bienvenue
+                            </label>
+                        </div>
+
+                        <div class="field">
+                            <label htmlFor="Password" class="form-label required-field">Password</label>
+                            <input pInputText id="Password" type="password" class="form-control"  required [(ngModel)]="collaborateur.password" name="password"/>
+                        </div>
+
+                        <div class="field">
+                            <button pButton pRipple label="Enregitrer" type="submit" [disabled]="!form.valid" style="width:200px"></button>
+                        </div>
+
+
+                    </div>
+                    <!--   <div class="form-outline mb-4">
+                           <label class="form-label" for="profileImage">Image Profile</label>
+                           <input type="file"  id="profileImage" (change)="onFileSelected($event)" [(ngModel)]="collaborateur.profile_image" name="profileImage" >
+
+                       </div>-->
+
+                </form>
+            </div>
+
+
+            <div  *ngIf="permission" class="tab-pane fade show active" >
+                <h4>Associer votre collaboratteur a un role </h4>
+                <form >
+
+
+
+                    <!--<p-dataView #dv [value]="permissions" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+                        <ng-template pTemplate="header">
+                            <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+                                <p-dropdown [options]="permissions" placeholder="Sort By Price" (onChange)="onSortChange($event)"></p-dropdown>
+                                <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input type="search" pInputText placeholder="Search by Name" (input)="onFilter(dv, $event)">
+                        </span>
+                                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                            </div>
+                        </ng-template>
+
+                        <ng-template let-product pTemplate="listItem">
+                            <div class="col-12">
+                                <div class="flex flex-column md:flex-row align-items-center p-3 w-full">
+                                    <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.name" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5"/>
+                                    <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
+                                        <div class="font-bold text-2xl">{{product.name}}</div>
+                                        <div class="mb-2">{{product.description}}</div>
+                                        <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false" styleClass="mb-2"></p-rating>
+                                        <div class="flex align-items-center mt-2">
+                                            <i class="pi pi-tag mr-2"></i>
+                                            <span class="font-semibold">{{product.category}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
+                                        <span class="text-2xl font-semibold mb-2 align-self-center md:align-self-end">${{product.price}}</span>
+                                        <p-button icon="pi pi-shopping-cart" label="Add to Cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'" styleClass="mb-2 p-button-sm"></p-button>
+                                        <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <ng-template let-product pTemplate="gridItem">
+                            <div class="col-12 md:col-4">
+                                <div class="card m-3 border-1 surface-border">
+                                    <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+                                        <div class="flex align-items-center">
+                                            <i class="pi pi-tag mr-2"></i>
+                                            <span class="font-semibold">{{product.category}}</span>
+                                        </div>
+                                        <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
+                                    </div>
+                                    <div class="flex flex-column align-items-center text-center mb-3">
+                                        <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.name" class="w-9 shadow-2 my-3 mx-0"/>
+                                        <div class="text-2xl font-bold">{{product.name}}</div>
+                                        <div class="mb-3">{{product.description}}</div>
+                                        <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+                                    </div>
+                                    <div class="flex align-items-center justify-content-between">
+                                        <span class="text-2xl font-semibold">${{product.price}}</span>
+                                        <p-button icon="pi pi-shopping-cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dataView>
+-->
+                    <div class="field">
+                        <label for="role" class="form-label required-field">Rôle</label>
+                        <select pDropdown id="role" class="form-control" [value]="roles" name="role" (change)="onRoleChange()">
+                            <option value="" disabled selected>Sélectionnez un rôle</option>
+                            <option *ngFor="let role of roles" [value]="role">{{ role.roleName }}</option>
+                            <option value="" disabled selected>Sélectionnez un rôle</option>
+                            <option *ngFor="let role of roles" [value]="role">{{ role.rolepermission }}</option>
+                        </select>
+
+                    </div>
+                    <!--<div *ngIf="selectedRole!==null">
+                        <h4>Permissions du rôle sélectionné :</h4>
+                        <ul>
+                            <li *ngFor="let permission of rolePermission">
+                                <strong>Permission ID:</strong> {{ permission.permissionid}} <br>
+                                <strong>Peut voir:</strong> {{ permission.canView }} <br>
+                                <strong>Peut créer:</strong> {{ permission.canCreate }} <br>
+                                <strong>Peut éditer:</strong> {{ permission.canEdit }} <br>
+                                <strong>Peut supprimer:</strong> {{ permission.canDelete }} <br>
+                            </li>
+                        </ul>
+                    </div>-->
+                    <p-table  rowGroupMode="subheader" groupRowsBy="representative.name" sortField="representative.name" sortMode="single" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Permission</th>
+                                <th>Afficher</th>
+                                <th>Modifier</th>
+                                <th>Ajouter</th>
+                                <th>Supprimer</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-customer let-rowIndex="rowIndex">
+
+                        </ng-template>
+                    </p-table>
+
+                    <!-- 2 column grid layout -->
+
+                    <!-- Submit button -->
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+

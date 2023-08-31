@@ -1,0 +1,50 @@
+<div>
+    <button routerLink="creerDemande" pButton pRipple type="button" label="Creer nouvelle demande" icon="pi pi-plus"
+            class="p-button-raised p-mr-2 p-mb-2" style="margin-left:500px ; width:300px"></button>
+    <p-table >
+
+    <ng-template pTemplate="header">
+        <h2>Demandes</h2>
+
+        <tr >
+            <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="name">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Creer sur ...
+                </div>
+            </th>
+            <th pSortableColumn="country.name">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Numéro de série
+                </div>
+            </th>
+            <th pSortableColumn="representative.name" style="width:250px;">
+                <div class="p-col p-d-flex p-jc-between p-ai-center">
+                    Service
+                </div>
+            </th>
+            <th pSortableColumn="date">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Client
+                </div>
+            </th>
+            <th pSortableColumn="balance">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Informations supplémentaires
+                </div>
+            </th>
+            <th pSortableColumn="status">
+                <div class="p-d-flex p-jc-between p-ai-center">
+
+
+                </div>
+            </th>
+
+            <th style="width: 8rem"></th>
+        </tr>
+    </ng-template>
+
+</p-table></div>
+

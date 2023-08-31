@@ -32,35 +32,10 @@ export interface Client {
     shippingState?: string;
     shippingCity?: string;
     shippingZip?: string;
-    shippingCountryId?: string;
+    shippingCountryId?: bigint;
 
     dateAffectation?:Date;
     staffFullName?:string;
     staffId?: bigint;
-
-
-    /*
-    state?: string;
-    dateCreated?: Date;
-    active?:Boolean;
-
-
-    longitude?: string;
-    latitude?: string;
-    defaultLanguage?: string;
-    showPrimaryContact?:Boolean;
-    DateAffectationOfCommercial?: Date;
-    country?: string;
-    currency?: string;
-    staff?: string;
-    ngp?: string;
-    clientsupplier?:string;
-    clientFolders?:string;
-    contacts?: string;*/
-
-
-
-
-
 
 }

@@ -1,0 +1,239 @@
+
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2" >
+                        <button pButton pRipple label="Ajouter Opportunity" icon="pi pi-plus" class="p-button-raised mr-2" (click)="ajouterOpportunity()"></button>
+                        <button pButton pRipple type="button" label="Exporter"  icon="pi pi-upload" class="p-button-secondary" (click)="exportToExcel()"></button>
+                    </div>
+                </ng-template>    
+            </p-toolbar>
+            <p-table #dt [value]="opportunities" [columns]="cols" responsiveLayout="scroll" [rows]="15" [globalFilterFields]="['dateCreated','clientName','service','volume']" [paginator]="true"  [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Liste de opportunity</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="dateCreated">Date de Creation <p-sortIcon field="dateCreated"></p-sortIcon></th>
+                        <th pSortableColumn="clientName">client <p-sortIcon field="clientName"></p-sortIcon></th>
+                        <th pSortableColumn="service"> Service <p-sortIcon field="service"></p-sortIcon></th>
+                        <th pSortableColumn="volume">Volume <p-sortIcon field="volume"></p-sortIcon></th>
+                        <th >Options</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-opportunity>
+                    <tr>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Date de Creation</span>
+                            {{this.formatDate(opportunity.dateCreated)}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">client</span>
+                          {{opportunity.clientName}}                        </td>
+                    
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Service</span>
+                            {{opportunity.service}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Volume</span>
+                            {{opportunity.volume}}{{opportunity.volumeUnit}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Options</span>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil"  class="p-button-rounded p-button-success p-button-outlined  mr-2" (click)="editopportunity(opportunity)"></button>
+                                <button pButton pRipple icon="pi pi-sync" class="p-button-rounded p-button-warning p-button-outlined mr-2"(click)="misajour(opportunity)"></button>    
+                            </div>   
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-dialog [(visible)]="opportunityDialog" [style]="{width: '1190px'}" header=" opportunity" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="form-columns formgroup-inline">
+                        <div class="form-column col-12 md:col-6">
+                            <div class="field ">
+                                <label for="startDate"><span style="color:red" >* </span>Date de debut</label>
+                                <p-calendar id="startDate" [(ngModel)]="opportunity.startDate"[showIcon]="true" inputId="icon" autofocus  [ngClass]="{'ng-invalid ng-dirty' : submitted && !opportunity.startDate}"/>
+                                 <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.startDate"><span style="color:red" >is required.</span></small>
+                            </div>
+                            <div class="field ">
+                                <label for="clientid"> <span style="color:red" >* </span>Client</label>
+                                <p-dropdown [options]="clients" placeholder="Selectionner..." optionLabel="company" optionValue="clientId" dataKey="clientId" [(ngModel)]="opportunity.clientid"></p-dropdown>
+                                 <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.clientid"><span style="color:red" >is required.</span></small>
+                            </div>
+                            <div class="field ">
+                                <label for="activity"> <span style="color:red" >* </span>secteur d'activité</label>
+                                <input type="text" pInputText id="activity" [(ngModel)]="opportunity.activity" />
+                                 <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.activity"><span style="color:red" >is required.</span></small>
+                            </div>
+                            <div class="form-columns formgroup-inline">
+                                <div class="form-column col-12 md:col-6">
+                                    <div class="field ">
+                                        <label for="volume">Volume</label>
+                                        <p-inputNumber id="volume" [(ngModel)]="opportunity.volume"mode="decimal" [showButtons]="true" [min]="0"></p-inputNumber>
+                                    </div>
+                                </div>
+                                <div class="form-column col-12 md:col-6">
+                                    <div class="field ">
+                                        <label for="volume">Volume Unit</label>
+                                        <p-dropdown [options]="volumeUnits" optionLabel="volumeUnit" optionValue="volumeUnit"  [(ngModel)]="opportunity.volumeUnit"></p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-columns formgroup-inline">
+                                <div class="form-column col-12 md:col-6">
+                                    <div class="field ">
+                                        <label for="expectedRevenue">Revenu prévu</label>
+                                        <p-inputNumber id="expectedRevenue" [(ngModel)]="opportunity.expectedRevenue"mode="decimal"  [min]="0"></p-inputNumber>
+                                    </div>
+                                </div>
+                                <div class="form-column col-12 md:col-6">
+                                    <div class="field ">
+                                        <label for="expectedBigProfit">bénéfice brut attendu</label>
+                                        <p-inputNumber id="expectedBigProfit" [(ngModel)]="opportunity.expectedBigProfit"mode="decimal"  [min]="0"></p-inputNumber>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-column col-12 md:col-6">
+                            <div class="field ">
+                                <label for="startDate"> <span style="color:red" >* </span>Date de Fin</label>
+                                <p-calendar id="endDate" [(ngModel)]="opportunity.endDate"[showIcon]="true" inputId="icon" autofocus  [ngClass]="{'ng-invalid ng-dirty' : submitted && !opportunity.endDate}"/>
+                                 <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.endDate"><span style="color:red" >is required.</span></small>
+                            </div>
+                            <div class="field ">
+                                <label for="service"><span style="color:red" >* </span>Service</label>
+                                <input type="text" pInputText id="service" [(ngModel)]="opportunity.service" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !opportunity.service}"/>
+                                 <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.service"> <span style="color:red" >is required.</span></small>
+                            </div>
+                            <div class="field ">
+                                <label for="staffid">commercial</label>
+                                <p-dropdown [options]="listStaff" placeholder="Selectionner..." [(ngModel)]="opportunity.staffid" [virtualScroll]="true" placeholder="Selectionner un Commercial" [virtualScrollItemSize]="20" optionLabel="lastName" optionValue="staffId" dataKey="staffId" (ngModelChange)="onStaffSelectionChange($event)">
+                                    <ng-template let-staff pTemplate="selectedItem">
+                                      {{ staff.firstName  + ' ' + staff.lastName}}
+                                    </ng-template>
+                                    <ng-template let-staff pTemplate="item">
+                                      {{ staff.firstName + ' ' + staff.lastName }}
+                                    </ng-template>
+                                </p-dropdown> 
+                            </div>
+                            <div class="field ">
+                                <label for="competition">competition</label>
+                                <p-dropdown [options]="competitions" optionLabel="competition" optionValue="competition"  [(ngModel)]="opportunity.competition"></p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <p-fieldset legend="Origine" [toggleable]="false" class="line-height-3 m-0">
+                        <div class="form-columns formgroup-inline">
+                            <div class="form-column col-12 md:col-6">
+                                <div class="field">
+                                    <label for="origineAddressType"><span style="color:red" >* </span>Type d'adresse</label>
+                                    <p-dropdown [options]="AddressTypes" placeholder="Selectionner..." optionLabel="AddressType" optionValue="AddressType"  [(ngModel)]="opportunity.origineAddressType"></p-dropdown>
+                                    <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.origineAddressType"><span style="color:red" >is required.</span></small>
+                                </div>
+                            </div>
+                            <div class="form-column col-12 md:col-6">
+                                <div class="field ">
+                                    <label for="origineCountry"><span style="color:red" >* </span>Pays</label>
+                                    <p-dropdown [options]="countries" placeholder="Selectionner..." optionLabel="longName" optionValue="longName" [(ngModel)]="opportunity.origineCountry"></p-dropdown>
+                                    <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.origineCountry"><span style="color:red" >is required.</span></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field ">
+                            <label for="origineAddress"><span style="color:red" >* </span>Adresse</label>
+                            <textarea id="origineAddress" pInputTextarea [(ngModel)]="opportunity.origineAddress"  rows="3" cols="20" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !opportunity.origineAddress}" ></textarea>
+                            <small class="ng-dirty ng-invalid" * ngIf="submitted && !opportunity.origineAddress"> <span style="color:red" >is required.</span></small>
+                        </div>
+                    </p-fieldset>
+                    <p-fieldset legend="Destination (facultatif)" [toggleable]="true" class="line-height-3 m-0">
+                        <div class="form-columns formgroup-inline">
+                            <div class="form-column col-12 md:col-6">
+                                <div class="field ">
+                                    <label for="destinationAddressType">Type d'adresse</label>
+                                    <p-dropdown [options]="AddressTypes"  placeholder="Selectionner..." optionLabel="AddressType" optionValue="AddressType"  [(ngModel)]="opportunity.destinationAddressType"></p-dropdown>   
+                                </div>
+                            </div>
+                            <div class="form-column col-12 md:col-6">
+                                <div class="field ">
+                                    <label for="destinationAddressType">Pays</label>
+                                    <p-dropdown [options]="countries" placeholder="Selectionner..." optionLabel="longName" optionValue="longName" [(ngModel)]="opportunity.destinationCountry"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field ">
+                            <label for="destinationAddress">Adresse</label>
+                            <textarea id="destinationAddress" pInputTextarea [(ngModel)]="opportunity.destinationAddress"  rows="3" cols="20" ></textarea>
+                        </div>
+                    </p-fieldset>
+                </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button-text" (click)="saveopportunity()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="MisajouropportunityDialog" [style]="{width:'800px'}" header=" Mis à jour" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="card formgroup-inline">
+                    <div class="form-column col-12 md:col-4">
+                        <div class="field ">
+                            <label for="status">Status</label>
+                            <p-dropdown [options]="statuses" optionLabel="status" optionValue="status" [(ngModel)]="Misajour.status"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="form-column col-12 md:col-6">
+                        <div class="field ">
+                            <label for="comment">Commentaire</label>
+                            <textarea id="comment" pInputTextarea [(ngModel)]="Misajour.comment" rows="3" cols="20"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-column col-12 md:col-2">
+                        <button pButton pRipple label="Ajouter" class="p-button-raised mr-2" (click)="ajoutermisajour()"></button>
+                    </div>
+                </div>
+                
+                <p-table #dt [value]="Misajours" [columns]="cols" responsiveLayout="scroll" [rows]="5"  [paginator]="true"  [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
+                
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="dateCreated">Date de Creation <p-sortIcon field="dateCreated"></p-sortIcon></th>
+                            <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+                            <th pSortableColumn="comment"> Commentaire <p-sortIcon field="comment"></p-sortIcon></th>
+                            <th >Options</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-Misajour>
+                        <tr>
+                            <td style="width:14%; min-width:10rem;"><span class="p-column-title">Date de Creation</span>
+                                {{this.formatDate(Misajour.dateCreated)}}
+                            </td>
+                            <td style="width:14%; min-width:10rem;"><span class="p-column-title">Status</span>
+                              {{Misajour.status}} 
+                            </td>
+                        
+                            <td style="width:14%; min-width:10rem;"><span class="p-column-title">Commentaire</span>
+                                {{Misajour.comment}}
+                            </td>
+                            <td style="width:14%; min-width:10rem;">
+                                <span class="p-column-title">Options</span>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" (click)="deletemisajour(Misajour)"></button>
+                                </div>   
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>

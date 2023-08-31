@@ -1,0 +1,272 @@
+<div class="grid p-fluid justify-content-center">
+    <div class="col-12 lg:col-6">
+        <div class="card" style="width: 300px">
+            <div class="d-flex justify-content-center">
+                <select class="form-select general-service me-3 py-2" [(ngModel)]="selectedGeneralService" style="margin-right: 20px">
+                    <option value="Terre">Terre</option>
+                    <option value="Mer">Mer</option>
+                </select>
+
+                <select class="form-select service-direction me-3 py-2" [(ngModel)]="selectedServiceDirection">
+                    <option value="Entrant(e)">Entrant(e)</option>
+                    <option value="Sortant(e)">Sortant(e)</option>
+                    <option value="National(e)">National(e)</option>
+                    <option value="Dédouanement">Dédouanement</option>
+                </select>
+                <br>
+                <button pButton pRipple class="btn btn-primary text-center" (click)="creerDemande()" style="margin-left:70px ;margin-top:20px;width: 30%">Créer</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="showForm" class="demande-form">
+<div class="card">
+
+
+    <form [formGroup]="demandeForm" (ngSubmit)="submitDemande()">
+
+       <!--service-->
+
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-6">
+                    <label htmlFor="firstname2">Service</label>
+                    <input pInputText id="firstname2" type="text" value="{{ selectedGeneralService }} - {{ selectedServiceDirection }}" />
+                </div>
+                <div class="field col-12 md:col-3" [formGroup]="demandeForm">
+                    <label htmlFor="state">Type d'envoi</label>
+                    <p-dropdown [options]="dropdownItems" optionLabel="name" formControlName="selectedState"></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-3" [formGroup]="demandeForm">
+                    <label htmlFor="state">Conditions d'expédition</label>
+                    <p-dropdown [options]="dropdowncondition" optionLabel="name" formControlName="selectedState"></p-dropdown>
+                </div>
+
+                    <div class="field col-12 md:col-3">
+                        <label htmlFor="zip">Date d'expidition</label>
+                        <input pInputText id="zip" type="date" />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label htmlFor="service">Services supplémentaires</label>
+                    <input pInputText id="service" type="text" />
+                </div>
+            </div>
+
+
+        <!--end of service -->
+
+
+
+        <!--CLIENT-->
+
+        <h4 style="color: #0b5ed7">Client</h4>
+
+        <p>Sélectionnez les détails du client dans le CRM:</p>
+
+        <div class="p-fluid p-formgrid grid d-flex justify-content-center" >
+        <div class="field col-12 md:col-6" [formGroup]="demandeForm">
+            <p-multiSelect [options]="client" formControlName="selectedMulti" placeholder="Select a Client" optionLabel="name" >
+                <ng-template  pTemplate="item">
+                    <div class="flex align-items-center">
+                         <span class="ml-2"></span>
+                    </div>
+                </ng-template>
+            </p-multiSelect>
+        </div>
+        <div class="field col-12 md:col-3" [formGroup]="demandeForm">
+            <p-multiSelect [options]="client" formControlName="selectedMulti" placeholder="Surccusale" optionLabel="name" >
+                <ng-template  pTemplate="item">
+                    <div class="flex align-items-center">
+                        <span class="ml-2"></span>
+                    </div>
+                </ng-template>
+            </p-multiSelect>
+        </div>
+        <div class="field col-12 md:col-3" [formGroup]="demandeForm">
+            <p-multiSelect [options]="client" formControlName="selectedMulti" placeholder="Contact" optionLabel="name" >
+                <ng-template  pTemplate="item">
+                    <div class="flex align-items-center">
+                        <span class="ml-2"></span>
+                    </div>
+                </ng-template>
+            </p-multiSelect>
+        </div>
+
+
+
+        <h5>OU entrez-les manuellement:</h5>
+            <br>
+
+            <div class="p-fluid p-formgrid grid " style="margin-left:50px ">
+
+                <div class="field col-12 md:col-6" >
+                    <label htmlFor="nom" >* Nom du client </label>
+                    <input pInputText id="nom" type="text" />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label htmlFor="contact">Contact</label>
+                    <input pInputText id="contact" type="text" />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label htmlFor="tel">Numéro de téléphone</label>
+                    <input pInputText id="tel" type="text" />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label htmlFor="mail">E-mail</label>
+                    <input pInputText id="mail" type="email" />
+                </div>
+                <div class="grid p-fluid justify-content-center">
+                    <div class="field col-12 md:col-9">
+                        <label htmlFor="expediteur">Expéditeur</label>
+                        <input pInputText id="expediteur" type="text" />
+                    </div>
+                    <div class="field col-12 md:col-9  ">
+                        <label htmlFor="destinataire">Destinataire</label>
+                        <input pInputText id="destinataire" type="email" />
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+        <!--end of CLIENT-->
+<!--Details adresse-->
+
+
+        <h4>Details de l'adresse </h4>
+        <div class="p-fluid p-formgrid grid d-flex justify-content-center" [formGroup]="demandeForm">
+            <div class="col-12 md:col-4">
+                <div class="field-radiobutton">
+                    <p-radioButton name="valRadio" value="Chicago" formControlName="valRadio" id="orig" ></p-radioButton>
+                    <label for="orig">Origine / Destination</label>
+                </div>
+            </div>
+            <div class="col-12 md:col-4">
+                <div class="field-radiobutton">
+                    <p-radioButton name="val" value="Chicago" formControlName="val" id="unique"></p-radioButton>
+                    <label for="unique">Site unique</label>
+                </div>
+            </div>
+
+        </div>
+<!--end of detail adresse-->
+
+
+
+        <!--Origine-->
+        <h4>  Origine</h4>
+
+        <div class="p-fluid p-formgrid grid">
+            <div class="field col-12 md:col-6" [formGroup]="demandeForm">
+                <label htmlFor="state">Type d'envoi</label>
+                <p-dropdown [options]="adresseType" optionLabel="name" formControlName="selectedState"></p-dropdown>
+            </div>
+            <div  class="field col-12 md:col-6" [formGroup]="demandeForm">
+                <label htmlFor="pay">Pays</label>
+                    <p-multiSelect  [options]="countries" formControlName="selectedCountry" placeholder="Select a Country" optionLabel="name" class="multiselect-custom" display="chip">
+                        <ng-template let-country pTemplate="item">
+                            <div class="flex align-items-center">
+                                <img src="assets/demo/images/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()" style="width:21px"/>
+                                <span class="ml-2">{{country.name}}</span>
+                            </div>
+                        </ng-template>
+                    </p-multiSelect>
+            </div>
+            <div class="field col-12 md:col-12" [formGroup]="demandeForm">
+                <label htmlFor="state">Port</label>
+                <p-dropdown [options]="dropdownItems" optionLabel="name" formControlName="selectedState"></p-dropdown>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+            <!--end of origine -->
+
+
+
+
+        <!--Destination-->
+        <h4>  Destination</h4>
+
+        <div class="p-fluid p-formgrid grid">
+            <div class="field col-12 md:col-6" [formGroup]="demandeForm">
+                <label htmlFor="state">Type d'envoi</label>
+                <p-dropdown [options]="adresseType" optionLabel="name" formControlName="selectedState"></p-dropdown>
+            </div>
+            <div  class="field col-12 md:col-6" [formGroup]="demandeForm">
+                <label htmlFor="pay">Pays</label>
+                <p-multiSelect  [options]="countries" formControlName="selectedCountry" placeholder="Select a Country" optionLabel="name" class="multiselect-custom" display="chip">
+                    <ng-template let-country pTemplate="item">
+                        <div class="flex align-items-center">
+                            <img src="assets/demo/images/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()" style="width:21px"/>
+                            <span class="ml-2">{{country.name}}</span>
+                        </div>
+                    </ng-template>
+                </p-multiSelect>
+            </div>
+            <div class="field col-12 md:col-12" [formGroup]="demandeForm">
+                <label htmlFor="state">Port</label>
+                <p-dropdown [options]="dropdownItems" optionLabel="name" formControlName="selectedState"></p-dropdown>
+            </div>
+        </div>
+
+
+        <!--end of Destination -->
+
+
+
+
+<!--Conteneurs / Fret-->
+        <h4>Conteneurs / Fret </h4>
+        <div class="p-fluid p-formgrid grid d-flex justify-content-center" [formGroup]="demandeForm">
+            <div class="col-12 md:col-4">
+                <div class="field-radiobutton">
+                    <p-radioButton name="valRadio" value="Chicago" formControlName="valRadio" id="exact" ></p-radioButton>
+                    <label for="exact">Exact Details</label>
+                </div>
+            </div>
+            <div class="col-12 md:col-4">
+                <div class="field-radiobutton">
+                    <p-radioButton name="val" value="Chicago" formControlName="val" id="general"></p-radioButton>
+                    <label for="general">Détails Généraux</label>
+                </div>
+            </div>
+
+        </div>
+        <!--end of Conteneurs / Fret-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <button type="submit" pButton pRipple class="btn btn-primary text-center" [disabled]="!demandeForm.valid">Créer Demande</button>
+    </form>
+</div>
+</div>

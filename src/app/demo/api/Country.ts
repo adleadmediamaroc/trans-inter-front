@@ -9,6 +9,4 @@ export interface Country {
     numcode?:string;
     unMember?:string;
 
-    
-
 }
