@@ -258,7 +258,8 @@
                     <p-tabPanel header="Facturation et Expédition" class="line-height-3 m-0">
                         <div class="form-columns formgroup-inline">
                             <div class="form-column col-12 md:col-6">
-                                <h4>Addresse de Facturation</h4>
+                                <b>Addresse de Facturation</b>
+                                <button pButton pRipple type="button" label="Copier l'Adresse Principale" class="p-button-text" (click)="copierAdressePrincipal()"></button>
                                 <div class="field ">
                                     <label class="mb-2" for="country">Pays</label>
                                     <p-dropdown [options]="countries" optionLabel="longName" [(ngModel)]="agentBillingCountry"></p-dropdown>
@@ -284,7 +285,8 @@
 
 
                             <div class="form-column col-12 md:col-6">
-                                <h4>Addresse d'Expédition</h4>
+                                <b>Addresse d'Expédition</b>
+                                <button pButton pRipple type="button" label="Copier l'Adresse de Facturation" class="p-button-text" (click)="copierAdresseFacturation()"></button>
                                 <div class="field ">
                                     <label class="mb-2" for="country2">Pays</label>
                                     <p-dropdown [options]="countries" optionLabel="longName" [(ngModel)]="agentShippingCountry"></p-dropdown>

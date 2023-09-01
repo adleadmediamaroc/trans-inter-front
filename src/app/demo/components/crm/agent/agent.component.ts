@@ -266,7 +266,20 @@ export class AgentComponent implements OnInit{
 
     }
 
-    protected readonly console = console;
+    copierAdresseFacturation() {
+        this.agent.shippingCountryId = this.agent.billingCountryId;
+        this.agent.shippingState = this.agent.billingState;
+        this.agent.shippingCity = this.agent.billingCity;
+        this.agent.shippingStreet = this.agent.billingStreet;
+        this.agent.shippingZip = this.agent.billingZip;
+    }
+
+    copierAdressePrincipal() {
+        this.agent.billingCountryId= this.agent.countryId;
+        this.agent.billingCity= this.agent.city;
+        this.agent.billingStreet= this.agent.address;
+        this.agent.billingZip= this.agent.zip;
+    }
 
 }
 
